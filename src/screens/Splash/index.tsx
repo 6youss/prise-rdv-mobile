@@ -3,7 +3,7 @@ import {SafeAreaView, View, Image, StatusBar} from 'react-native';
 import logoDark from '../../assets/logoDark.png';
 import styles from './styles';
 
-const App = () => {
+const Splash = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -16,4 +16,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Splash;

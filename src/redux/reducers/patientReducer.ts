@@ -1,24 +1,15 @@
-import {PatientActionTypes} from '../actions/patientActions';
+import {PatientAction} from '../actions/patientActions';
+import {IPatient} from 'src/types';
 
-export interface PatientAction {
-  type: PatientActionTypes;
-  payload: any;
-}
-
-export interface IPatientState {
-  firstName: string;
-  lastName: string;
-}
-
-const initState: IPatientState = {
+const initState: IPatient = {
   firstName: 'Flen',
   lastName: 'Benflen',
 };
 
 function reducer(
-  prevState: IPatientState = initState,
+  prevState: IPatient = initState,
   action: PatientAction,
-): IPatientState {
+): IPatient {
   switch (action.type) {
     case 'SET_PATIENT_PROFILE':
       return {

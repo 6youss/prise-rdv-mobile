@@ -8,8 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "ls-emulators": "cd ~/AppData/Local/Android/sdk/tools/bin && ./avdmanager.bat list avd",
-    "emulator": "cd ~/AppData/Local/Android/sdk/emulator && ./emulator -avd NAME_OF_YOUR_DEVICE"
+    "emulator-ls": "emulator -list-avds",
+    "emulator": "emulator -avd Pixel_3_API_29"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.6",

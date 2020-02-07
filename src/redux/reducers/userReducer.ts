@@ -1,28 +1,14 @@
-import {UserActionTypes} from '../actions/userActions';
+import {UserAction} from '../actions/userActions';
+import {IUser} from 'src/types';
 
-export interface UserAction {
-  type: UserActionTypes;
-  payload: any;
-}
-
-export interface IUserState {
-  id: string;
-  username: string;
-  userType: 'patient' | 'doctor';
-  accessToken: string | undefined;
-}
-
-const initState: IUserState = {
+const initState: IUser = {
   id: 'khkh',
   username: 'patient',
   userType: 'patient',
-  accessToken: 'accessToken that works',
+  accessToken: undefined,
 };
 
-function reducer(
-  prevState: IUserState = initState,
-  action: UserAction,
-): IUserState {
+function reducer(prevState: IUser = initState, action: UserAction): IUser {
   switch (action.type) {
     case 'SIGN_IN':
       return {
