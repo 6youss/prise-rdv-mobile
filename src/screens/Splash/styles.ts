@@ -7,11 +7,20 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.primaryDark,
   },
   logo: {
-    width: 70,
-    height: 70,
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: [{translateX: -30}, {translateY: -30}],
+    width: 60,
+    height: 60,
+  },
+  bgLight: {
+    height: '100%',
+    width: '100%',
+    opacity: 0.6,
   },
 });
 export default styles;
