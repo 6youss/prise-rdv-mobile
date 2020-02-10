@@ -16,6 +16,7 @@ const Input: React.FC<InputProps & TextInputProps> = ({
     <TextInput
       style={[styles.defaultInputStyles, style]}
       placeholderTextColor={Colors.whiteTransparent}
+      selectionColor={Colors.primaryDark}
       {...props}
     />
   );

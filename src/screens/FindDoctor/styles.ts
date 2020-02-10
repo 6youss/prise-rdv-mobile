@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.whiteTransparent,
     marginTop: 7,
-    marginBottom: 15,
+    marginBottom: 40,
   },
   searchButtonContainer: {
     elevation: 20,
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   searchButton: {
     width: 80,
     height: 80,
-    backgroundColor: Colors.primary,
+    backgroundColor: Colors.primaryLight,
     justifyContent: 'center',
     alignContent: 'center',
   },

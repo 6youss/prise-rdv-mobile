@@ -1,5 +1,5 @@
 import {BASE_URL} from '../utils/values';
-import {IUser, IDoctor, IPatient, IUserProfile} from '../types';
+import {IUser, IUserProfile} from '../types';
 
 export async function login(
   username: string,

@@ -3,7 +3,7 @@ import {Colors} from '../../utils/values';
 
 const styles = StyleSheet.create({
   defaultInputStyles: {
-    fontSize: 23,
+    fontSize: 27,
     fontWeight: 'bold',
     borderBottomColor: Colors.whiteTransparent,
     borderBottomWidth: 1.5,
