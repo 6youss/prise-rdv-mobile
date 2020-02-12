@@ -6,15 +6,13 @@ import {
 
 import {useSelector, useDispatch} from 'react-redux';
 
-import {Splash, FindDoctor} from './screens';
-import {RootState} from './redux/reducers';
+import {Splash, FindDoctor, DoctorSessions, Login} from './screens';
 
 import {getUser} from './api/user';
-import {IUser} from './types';
+import {IUser, RootState, RootStackParamList} from './types';
 import {setPatientProfileAction} from './redux/actions/patientActions';
-import Login from './screens/Login';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 const defaultOptions: StackNavigationOptions = {
   headerShown: false,
@@ -56,7 +54,10 @@ export default function Router() {
       ) : needAuth ? (
         <Stack.Screen name="Login" component={Login} />
       ) : (
-        <Stack.Screen name="FindDoctor" component={FindDoctor} />
+        <>
+          <Stack.Screen name="FindDoctor" component={FindDoctor} />
+          <Stack.Screen name="DoctorSessions" component={DoctorSessions} />
+        </>
       )}
     </Stack.Navigator>
   );

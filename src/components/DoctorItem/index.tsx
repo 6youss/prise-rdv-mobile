@@ -6,9 +6,14 @@ import Avatar from '../Avatar';
 import {Colors} from '../../utils/values';
 import Touchable from '../Touchable';
 
-const DoctorItem: React.FC<IDoctor> = ({firstName, lastName, address}) => {
+const DoctorItem: React.FC<IDoctor & {onPress: () => void}> = ({
+  firstName,
+  lastName,
+  address,
+  onPress,
+}) => {
   return (
-    <Touchable style={styles.container}>
+    <Touchable onPress={onPress} style={styles.container}>
       <Avatar />
       <View style={styles.descContainer}>
         <Text

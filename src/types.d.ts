@@ -25,3 +25,10 @@ export interface RootState {
   user: IUser;
   patient: IPatient;
 }
+
+export type RootStackParamList = {
+  Splash: undefined;
+  Login: undefined;
+  FindDoctor: undefined;
+  DoctorSessions: undefined;
+};

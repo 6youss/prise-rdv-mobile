@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, Image, Alert} from 'react-native';
 import {useSelector} from 'react-redux';
-import {IPatient, RootState, IDoctor} from '../../types';
+import {IPatient, RootState, IDoctor, RootStackParamList} from '../../types';
 import {ScreenContainer, Input} from '../../components';
 import styles from './styles';
 import {fetchDoctorByPhone} from '../../api/doctor';
@@ -11,7 +11,18 @@ import DoctorItem from '../../components/DoctorItem';
 import FloatingButton from '../../components/FloatingButton';
 import doctorIllustration from '../../assets/doctorIllustration.jpg';
 import {Colors} from '../../utils/values';
-const FindDoctor = () => {
+
+import {StackNavigationProp} from '@react-navigation/stack';
+
+type FindDoctorScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'FindDoctor'
+>;
+
+type Props = {
+  navigation: FindDoctorScreenNavigationProp;
+};
+const FindDoctor: React.FC<Props> = ({navigation}) => {
   const patient = useSelector(function(store: RootState): IPatient {
     return store.patient;
   });
@@ -66,7 +77,12 @@ const FindDoctor = () => {
         {loading ? (
           <Loader />
         ) : foundDoctor ? (
-          <DoctorItem {...foundDoctor} />
+          <DoctorItem
+            {...foundDoctor}
+            onPress={() => {
+              navigation.navigate('DoctorSessions');
+            }}
+          />
         ) : (
           <>
             <Image
