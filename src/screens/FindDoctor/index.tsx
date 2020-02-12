@@ -1,60 +1,93 @@
 import React from 'react';
-import {Text, View, Image, TouchableNativeFeedback, Alert} from 'react-native';
+import {Text, View, Image, Alert} from 'react-native';
 import {useSelector} from 'react-redux';
-import {IPatient, RootState} from '../../types';
+import {IPatient, RootState, IDoctor} from '../../types';
 import {ScreenContainer, Input} from '../../components';
-import defaultProfile from '../../assets/defaultProfile.jpg';
 import styles from './styles';
-import {Colors} from '../../utils/values';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {fetchDoctorByPhone} from '../../api/doctor';
-
+import Avatar from '../../components/Avatar';
+import Loader from '../../components/Loader';
+import DoctorItem from '../../components/DoctorItem';
+import FloatingButton from '../../components/FloatingButton';
+import doctorIllustration from '../../assets/doctorIllustration.jpg';
+import {Colors} from '../../utils/values';
 const FindDoctor = () => {
   const patient = useSelector(function(store: RootState): IPatient {
     return store.patient;
   });
 
-  const [searchValue, setSearchValue] = React.useState('');
+  const [searchValue, setSearchValue] = React.useState<string>('');
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [foundDoctor, setFoundDoctor] = React.useState<IDoctor | undefined>(
+    undefined,
+  );
 
   function handleSearchValue(text: string) {
     setSearchValue(text);
+    setFoundDoctor(undefined);
   }
 
   async function findDoctor() {
     try {
+      setLoading(true);
       const doctor = await fetchDoctorByPhone(searchValue);
-    } catch (error) {}
+      setFoundDoctor(doctor);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      Alert.alert(
+        'Oops!',
+        'Vérifier le numéro de téléphone et que vous êtes bien connecté à internet',
+      );
+      console.log(error);
+    }
   }
 
   return (
     <ScreenContainer>
       <View style={styles.container}>
         <View style={styles.searchContainer}>
-          <Image style={styles.profilePic} source={defaultProfile} />
+          <Avatar radius={70} />
           <Text style={styles.profileName}>
             {patient.firstName} {patient.lastName}
           </Text>
           <Input
+            style={{textAlign: 'center'}}
             placeholder="Numéro du docteur"
             keyboardType="phone-pad"
             onChangeText={handleSearchValue}
             value={searchValue}
             onSubmitEditing={findDoctor}
+            keyboardAppearance="dark"
+            returnKeyType="search"
           />
         </View>
+
+        {loading ? (
+          <Loader />
+        ) : foundDoctor ? (
+          <DoctorItem {...foundDoctor} />
+        ) : (
+          <>
+            <Image
+              style={styles.doctorIllustration}
+              source={doctorIllustration}
+            />
+            <Text
+              style={{
+                textAlign: 'center',
+                fontSize: 15,
+                color: Colors.darkGray,
+              }}>
+              Trouvez votre médecin
+            </Text>
+          </>
+        )}
         <View style={styles.pushToBottomCenter}>
-          <View style={styles.searchButtonContainer}>
-            <TouchableNativeFeedback onPress={findDoctor}>
-              <View style={styles.searchButton}>
-                <Icon
-                  name="search"
-                  size={27}
-                  style={{textAlign: 'center'}}
-                  color={Colors.primaryDark}
-                />
-              </View>
-            </TouchableNativeFeedback>
-          </View>
+          <FloatingButton
+            disabled={loading || !searchValue}
+            onPress={findDoctor}
+          />
         </View>
       </View>
     </ScreenContainer>

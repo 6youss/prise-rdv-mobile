@@ -20,28 +20,14 @@ const styles = StyleSheet.create({
     marginTop: 7,
     marginBottom: 40,
   },
-  searchButtonContainer: {
-    elevation: 20,
-    overflow: 'hidden',
-    borderRadius: 80,
-    margin: 30,
-  },
-  searchButton: {
-    width: 80,
-    height: 80,
-    backgroundColor: Colors.primaryLight,
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
-  buttonText: {
-    color: Colors.white,
-    textAlign: 'center',
-    fontSize: 20,
-  },
   pushToBottomCenter: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
+  },
+  doctorIllustration: {
+    width: '100%',
+    height: 300,
   },
 });
 export default styles;
