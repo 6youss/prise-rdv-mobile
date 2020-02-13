@@ -9,9 +9,14 @@ import {useSelector, useDispatch} from 'react-redux';
 import {Splash, FindDoctor, DoctorSessions, Login} from './screens';
 
 import {getUser} from './api/user';
-import {IUser, RootState, RootStackParamList} from './types';
 import {setPatientProfileAction} from './redux/actions/patientActions';
-
+import {IUser, RootState} from './types';
+export type RootStackParamList = {
+  Splash: undefined;
+  Login: undefined;
+  FindDoctor: undefined;
+  DoctorSessions: undefined;
+};
 const Stack = createStackNavigator<RootStackParamList>();
 
 const defaultOptions: StackNavigationOptions = {

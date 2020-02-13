@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Alert} from 'react-native';
 import styles from './styles';
-import {IDoctor} from '../../types';
+
 import Avatar from '../Avatar';
 import {Colors} from '../../utils/values';
 import Touchable from '../Touchable';

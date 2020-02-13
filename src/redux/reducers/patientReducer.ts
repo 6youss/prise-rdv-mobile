@@ -1,5 +1,5 @@
+import {IPatient} from '../../types';
 import {PatientAction} from '../actions/patientActions';
-import {IPatient} from 'src/types';
 
 const initState: IPatient = {
   firstName: 'Flen',

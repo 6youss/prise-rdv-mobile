@@ -1,9 +1,12 @@
+declare module '*.jpg';
+declare module '*.png';
+
 export interface IDoctor {
   firstName: string;
   lastName: string;
   phone: string;
   address: string;
-  holidays: [Date];
+  holidays: Array<Date>;
 }
 
 export interface IPatient {
@@ -21,14 +24,6 @@ export interface IUser {
   userType: 'patient' | 'doctor';
   accessToken: string | undefined;
 }
-export interface RootState {
-  user: IUser;
-  patient: IPatient;
-}
 
-export type RootStackParamList = {
-  Splash: undefined;
-  Login: undefined;
-  FindDoctor: undefined;
-  DoctorSessions: undefined;
-};
+export {RootStackParamList} from './Router';
+export {RootState} from './redux/reducers/index';
