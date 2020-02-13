@@ -37,7 +37,9 @@ export default function Router() {
         const userProfile = await getUser(accessToken);
         dispatch(setPatientProfileAction(userProfile.patient));
         setNeedAuth(false);
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       } catch (error) {
         console.log({error: error.message});
         setIsLoading(false);

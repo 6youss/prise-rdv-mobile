@@ -27,7 +27,9 @@ const FindDoctor: React.FC<Props> = ({navigation}) => {
     return store.patient;
   });
 
-  const [searchValue, setSearchValue] = React.useState<string>('');
+  const [searchValue, setSearchValue] = React.useState<string>(
+    __DEV__ ? '0758081532' : '',
+  );
   const [loading, setLoading] = React.useState<boolean>(false);
   const [foundDoctor, setFoundDoctor] = React.useState<IDoctor | undefined>(
     undefined,
