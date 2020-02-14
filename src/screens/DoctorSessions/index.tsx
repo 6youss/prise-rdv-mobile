@@ -3,20 +3,111 @@ import {View, Text, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import {login} from '../../api/user';
 import {useDispatch} from 'react-redux';
 import {signInAction} from '../../redux/actions/userActions';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import {
+  Calendar,
+  CalendarList,
+  Agenda,
+  DateObject,
+  AgendaItemsMap,
+} from 'react-native-calendars';
 import {ScreenContainer} from '../../components';
 import xdate from 'xdate';
-// import styles from './styles';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../types';
+import styles from './styles';
 
-// const DoctorSessions: React.FC = () => {
-//   return (
-//     <ScreenContainer>
-//     </ScreenContainer>
-//   );
-// };
+type DoctorSessionsScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  'DoctorSessions'
+>;
 
-// export default DoctorSessions;
+type Props = {
+  navigation: DoctorSessionsScreenNavigationProp;
+};
 
+interface AgendaItem {
+  name: string;
+  height: number;
+}
+
+const DoctorSessions: React.FC<Props> = () => {
+  const [items, setItems] = React.useState<AgendaItemsMap<AgendaItem>>({});
+
+  function loadItems(day: DateObject) {
+    setTimeout(() => {
+      for (let i = -15; i < 85; i++) {
+        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+        const strTime = timeToString(time);
+        if (!items[strTime]) {
+          items[strTime] = [];
+          const numItems = Math.floor(Math.random() * 5);
+          for (let j = 0; j < numItems; j++) {
+            items[strTime].push({
+              name: 'Item for ' + strTime + ' #' + j,
+              height: Math.max(50, Math.floor(Math.random() * 150)),
+            });
+          }
+        }
+      }
+      const newItems: AgendaItemsMap<AgendaItem> = {};
+      Object.keys(items).forEach(key => {
+        newItems[key] = items[key];
+      });
+      setItems(newItems);
+    }, 1000);
+  }
+
+  function renderItem(item: AgendaItem) {
+    return (
+      <TouchableOpacity
+        style={[styles.item, {height: item.height}]}
+        onPress={() => Alert.alert(item.name)}>
+        <Text>{item.name}</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  function renderEmptyDate() {
+    return (
+      <View style={styles.emptyDate}>
+        <Text>This is empty date!</Text>
+      </View>
+    );
+  }
+
+  function rowHasChanged(r1: AgendaItem, r2: AgendaItem) {
+    return r1.name !== r2.name;
+  }
+
+  function timeToString(time: number): string {
+    const date = new Date(time);
+    return date.toISOString().split('T')[0];
+  }
+
+  return (
+    <ScreenContainer>
+      <View style={{height: '100%'}}>
+        <Agenda
+          items={items}
+          // Callback that gets called when items for a certain month should be loaded (month became visible)
+          loadItemsForMonth={loadItems}
+          selected={'2017-05-16'}
+          renderItem={renderItem}
+          renderEmptyDate={renderEmptyDate}
+          rowHasChanged={rowHasChanged}
+          // monthFormat={'yyyy'}
+          // theme={{calendarBackground: 'red', agendaKnobColor: 'green'}}
+          // renderDay={(day, item) => <Text>{day ? day.day : 'item'}</Text>}
+          // hideExtraDays={false}
+        />
+      </View>
+    </ScreenContainer>
+  );
+};
+
+export default DoctorSessions;
+
+/*
 export default class AgendaScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -106,19 +197,4 @@ export default class AgendaScreen extends React.Component {
     return date.toISOString().split('T')[0];
   }
 }
-
-const styles = StyleSheet.create({
-  item: {
-    backgroundColor: 'white',
-    flex: 1,
-    borderRadius: 5,
-    padding: 10,
-    marginRight: 10,
-    marginTop: 17,
-  },
-  emptyDate: {
-    height: 15,
-    flex: 1,
-    paddingTop: 30,
-  },
-});
+*/

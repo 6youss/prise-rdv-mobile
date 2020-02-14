@@ -13,7 +13,7 @@ import {Colors} from '../../utils/values';
 
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootState} from '../../redux/reducers';
-import {RootStackParamList} from '../../types';
+import {RootStackParamList, IPatient, IDoctor} from '../../types';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -24,8 +24,11 @@ type Props = {
   navigation: FindDoctorScreenNavigationProp;
 };
 const FindDoctor: React.FC<Props> = ({navigation}) => {
-  const {patient, doctor} = useSelector(function(store: RootState) {
-    return {patient: store.patient, doctor: store.doctor};
+  const patient = useSelector(function(store: RootState): IPatient {
+    return store.patient;
+  });
+  const doctor = useSelector(function(store: RootState): IDoctor {
+    return store.doctor;
   });
 
   const [searchValue, setSearchValue] = React.useState<string>(

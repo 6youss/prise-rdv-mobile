@@ -1,4 +1,4 @@
-import {IPatient} from 'src/types';
+import {IPatient} from '../../types';
 
 export enum PatientActionTypes {
   SET_PATIENT_PROFILE = 'SET_PATIENT_PROFILE',

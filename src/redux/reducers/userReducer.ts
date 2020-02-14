@@ -1,5 +1,5 @@
 import {UserAction} from '../actions/userActions';
-import {IUser} from 'src/types';
+import {IUser} from '../../types';
 
 const initState: IUser = {
   id: 'khkh',

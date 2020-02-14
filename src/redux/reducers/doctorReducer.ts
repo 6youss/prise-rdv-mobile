@@ -4,7 +4,7 @@ import {IDoctor} from '../../types';
 const initState: IDoctor = {
   firstName: 'Flen',
   lastName: 'Benflen',
-  address: 'Elhih kodam lakhor hadak',
+  address: 'Somewhere i belong',
   holidays: [],
   phone: '0000000000',
 };

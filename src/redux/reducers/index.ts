@@ -1,4 +1,5 @@
 import {IUser, IPatient, IDoctor} from '../../types';
+
 export interface RootState {
   user: IUser;
   patient: IPatient;
