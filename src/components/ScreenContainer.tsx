@@ -9,7 +9,9 @@ const ScreenContainer: React.FC = ({children}) => {
         backgroundColor={Colors.primaryDark}
         barStyle="light-content"
       />
-      <SafeAreaView>{children}</SafeAreaView>
+      <SafeAreaView style={{backgroundColor: Colors.white, flex: 1}}>
+        {children}
+      </SafeAreaView>
     </>
   );
 };

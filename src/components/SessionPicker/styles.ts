@@ -1,7 +1,39 @@
 import {StyleSheet} from 'react-native';
+import {Colors} from '../../utils/values';
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    backgroundColor: Colors.white,
+    flex: 1,
+  },
+});
+
+export const dcs = StyleSheet.create({
+  container: {
+    width: '20%',
+    alignItems: 'center',
+  },
+  day: {
+    color: Colors.darkGray,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 15,
+  },
+  month: {
+    color: Colors.secondary,
+    textAlign: 'center',
+    fontSize: 17,
+  },
+  hour: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+  },
+  hourText: {
+    color: Colors.primary,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
 export default styles;

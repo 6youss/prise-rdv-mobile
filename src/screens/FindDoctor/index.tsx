@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, Image, Alert} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {ScreenContainer, Input} from '../../components';
 import styles from './styles';
 import {fetchDoctorByPhone} from '../../api/doctor';
@@ -14,6 +14,8 @@ import {Colors} from '../../utils/values';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootState} from '../../redux/reducers';
 import {RootStackParamList, IPatient, IDoctor} from '../../types';
+import {doctorSelector, patientSelector} from '../../redux/selectors';
+import {setSearchedDoctorAction} from '../../redux/actions/doctorActions';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -24,12 +26,9 @@ type Props = {
   navigation: FindDoctorScreenNavigationProp;
 };
 const FindDoctor: React.FC<Props> = ({navigation}) => {
-  const patient = useSelector(function(store: RootState): IPatient {
-    return store.patient;
-  });
-  const doctor = useSelector(function(store: RootState): IDoctor {
-    return store.doctor;
-  });
+  const dispatch = useDispatch();
+  const patient = useSelector(patientSelector);
+  const doctor = useSelector(doctorSelector);
 
   const [searchValue, setSearchValue] = React.useState<string>(
     __DEV__ ? '0758081532' : '',
@@ -49,6 +48,7 @@ const FindDoctor: React.FC<Props> = ({navigation}) => {
       setLoading(true);
       const doctor = await fetchDoctorByPhone(searchValue);
       setFoundDoctor(doctor);
+      dispatch(setSearchedDoctorAction(doctor));
       setLoading(false);
     } catch (error) {
       setLoading(false);

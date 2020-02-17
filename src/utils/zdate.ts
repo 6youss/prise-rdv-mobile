@@ -24,7 +24,7 @@ export class ZHour {
     return this.h * 60 + this.min;
   }
   toString(): string {
-    return this.h + ':' + this.min;
+    return ('0' + this.h).slice(-2) + ':' + ('0' + this.min).slice(-2);
   }
   equals(anotherHour: ZHour): boolean {
     return this.h === anotherHour.h && this.min === anotherHour.min;
