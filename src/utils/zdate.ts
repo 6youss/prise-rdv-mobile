@@ -11,7 +11,7 @@ export class ZHour {
   private constructor(private h: number, private min: number) {}
 
   addDuration(duration: number): ZHour {
-    let newHH = this.h + Math.floor(duration / 60);
+    let newHH = this.h + Math.floor((this.min + duration) / 60);
     const newMM = (this.min + duration) % 60;
 
     return new ZHour(newHH, newMM);

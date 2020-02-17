@@ -1,9 +1,9 @@
 import {ZHour} from '../zdate';
 
 it('addDuration', () => {
-  const h1 = ZHour.fromString('12:30').addDuration(90);
-
-  expect(h1.equals(ZHour.fromString('14:00'))).toBe(true);
+  const h1 = ZHour.fromString('11:45').addDuration(30);
+  console.log(h1.toString());
+  expect(h1.equals(ZHour.fromString('12:15'))).toBe(true);
 });
 
 it('isLess', () => {
