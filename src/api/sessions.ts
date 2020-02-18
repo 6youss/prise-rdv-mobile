@@ -20,3 +20,19 @@ export async function postSession(
   }
   throw new Error(await res.text());
 }
+
+export async function getDoctorSessions(
+  accessToken: string | undefined,
+  doctorId: string,
+): Promise<Array<ISession>> {
+  const res = await fetch(`${BASE_URL}/sessions/doctor/${doctorId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  if (res.ok) {
+    return (await res.json()).sessions;
+  }
+  throw new Error(await res.text());
+}

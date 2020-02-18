@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Alert} from 'react-native';
+import {Text, Alert} from 'react-native';
 
 import {ScreenContainer} from '../../components';
 
@@ -8,15 +8,17 @@ import {RootStackParamList, IDoctor} from '../../types';
 import styles from './styles';
 import SessionPicker from '../../components/SessionPicker';
 import {ZTime} from '../../utils/ztime';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   doctorSelector,
   patientSelector,
   tokenSelector,
+  sessionsSelector,
 } from '../../redux/selectors';
 import {Colors} from '../../utils/values';
-import {postSession} from '../../api/sessions';
+import {postSession, getDoctorSessions} from '../../api/sessions';
 import {getDateFromString} from '../../utils/date';
+import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 
 type DoctorSessionsScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -28,9 +30,25 @@ type Props = {
 };
 
 const DoctorSessions: React.FC<Props> = () => {
+  const dispatch = useDispatch();
   const patient = useSelector(patientSelector);
   const doctor = useSelector(doctorSelector);
+  const sessions = useSelector(sessionsSelector);
   const accessToken = useSelector(tokenSelector);
+
+  React.useEffect(() => {
+    fetchSessions();
+  }, []);
+
+  function fetchSessions() {
+    getDoctorSessions(accessToken, doctor._id)
+      .then(sessions => {
+        dispatch(setSearchedDoctorSessionsAction(sessions));
+      })
+      .catch(error => {
+        Alert.alert('Oops!', error.message);
+      });
+  }
 
   function handleDayPress(date: string, time: ZTime) {
     Alert.alert(
@@ -47,10 +65,15 @@ const DoctorSessions: React.FC<Props> = () => {
               getDateFromString(`${date}T${time.toString()}`),
             )
               .then(session => {
-                Alert.alert('ahum', JSON.stringify(session));
+                fetchSessions();
+                Alert.alert(
+                  'Success',
+                  `session prise avec succes, 
+                ${JSON.stringify(session)}`,
+                );
               })
-              .catch(session => {
-                Alert.alert('ahum', session.message);
+              .catch(error => {
+                Alert.alert('Oops!', error.message);
               });
           },
         },
@@ -66,17 +89,11 @@ const DoctorSessions: React.FC<Props> = () => {
       </Text>
 
       <SessionPicker
+        currentDate={new Date()}
         onDayPress={handleDayPress}
         dayCount={3}
         sessions={{
-          '01-02-2020': ['08:00', '08:30', '16:30'],
-          '02-02-2020': [],
-          '03-02-2020': [],
-          '04-02-2020': [],
-          '05-02-2020': [],
-          '06-02-2020': [],
-          '07-02-2020': [],
-          '08-02-2020': [],
+          '01-02-2020': ['10:30'],
         }}
       />
     </ScreenContainer>

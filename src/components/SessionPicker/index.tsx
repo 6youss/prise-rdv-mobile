@@ -7,35 +7,42 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Touchable from '../Touchable';
 import DayColumn from './DayColumn';
 import {Colors} from '../../utils/values';
-import {getDayName, getMonthName, getDateFromString} from '../../utils/date';
+import {
+  getDayName,
+  getMonthName,
+  getDateFromString,
+  getStringFromDate,
+} from '../../utils/date';
 
 export type Hours = Array<string>;
-
-export type ZHours = Array<ZTime>;
 
 export interface Sessions {
   [date: string]: Hours;
 }
+
+export type ZHours = Array<ZTime>;
 
 export interface ZSessions {
   [date: string]: ZHours;
 }
 
 export interface SessionPickerProps {
-  dayCount: 1 | 2 | 3 | 4 | 5;
+  currentDate: Date;
+  dayCount?: 1 | 2 | 3 | 4 | 5;
   startingHour?: ZTime;
   endingHour?: ZTime;
   sessionDuration?: number;
-  sessions: Sessions;
+  sessions?: Sessions;
   onDayPress?: (day: string, hour: ZTime) => void;
 }
 
 const SessionPicker: React.FC<SessionPickerProps> = ({
-  dayCount,
+  currentDate = new Date(),
+  dayCount = 3,
   startingHour = ZTime.fromString('08:00'),
   endingHour = ZTime.fromString('17:00'),
   sessionDuration = 30,
-  sessions,
+  sessions = {},
   onDayPress,
 }) => {
   let __sessions: ZSessions = {};
@@ -43,6 +50,12 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
     if (i >= dayCount) break;
     const date = Object.keys(sessions)[i];
     __sessions[date] = sessions[date].map(hour => ZTime.fromString(hour));
+  }
+  for (let i = 0; i < dayCount; i++) {
+    const currentDayStr = getStringFromDate(currentDate, false);
+    if (!__sessions[currentDayStr]) {
+      __sessions[currentDayStr] = [];
+    }
   }
 
   const dayColumnWidth = 80 / dayCount;

@@ -1,5 +1,16 @@
 import {ZTime} from './ztime';
 
+export function getStringFromDate(date: Date, withTime: boolean): string {
+  return (
+    `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}` +
+    (withTime
+      ? `T${('0' + date.getHours()).slice(-2)}:${(
+          '0' + date.getMinutes()
+        ).slice(-2)}`
+      : '')
+  );
+}
+
 export function getDateFromString(dateTimeString: string): Date {
   const [dateString, timeString] = dateTimeString.split('T');
 

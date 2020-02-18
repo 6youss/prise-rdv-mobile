@@ -6,6 +6,7 @@ export interface IUser {
   username: string;
   userType: 'patient' | 'doctor';
   accessToken: string | undefined;
+  refreshToken: string | undefined;
 }
 export interface IDoctor {
   _id: string;
@@ -26,9 +27,10 @@ export interface IUserProfile {
   doctor: IDoctor;
 }
 export interface ISession {
+  _id: string;
   patient: string;
   doctor: string;
-  date: Date;
+  date: string;
 }
 
 export {RootStackParamList} from './Router';
