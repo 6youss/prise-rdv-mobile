@@ -1,14 +1,35 @@
 import {ZTime} from './ztime';
 
+export function dateRange(startDate: Date, dayCount: number): Array<Date> {
+  var dateArray = new Array();
+  var stopDate = addDays(startDate, dayCount);
+  var currentDate = startDate;
+  while (currentDate <= stopDate) {
+    dateArray.push(new Date(currentDate));
+    currentDate = addDays(currentDate, 1);
+  }
+  return dateArray;
+}
+
+export function addDays(date: Date, days: number): Date {
+  var newdate = new Date(date.valueOf());
+  newdate.setDate(date.getDate() + days);
+  return newdate;
+}
+
 export function getStringFromDate(date: Date, withTime: boolean): string {
   return (
-    `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}` +
+    `${addZero(date.getDate())}-${addZero(
+      date.getMonth() + 1,
+    )}-${date.getFullYear()}` +
     (withTime
-      ? `T${('0' + date.getHours()).slice(-2)}:${(
-          '0' + date.getMinutes()
-        ).slice(-2)}`
+      ? `T${addZero(date.getHours())}:${addZero(date.getMinutes())}`
       : '')
   );
+}
+
+function addZero(num: number): string {
+  return ('0' + num).slice(-2);
 }
 
 export function getDateFromString(dateTimeString: string): Date {

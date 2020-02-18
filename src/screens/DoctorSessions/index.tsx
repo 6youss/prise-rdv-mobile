@@ -17,7 +17,7 @@ import {
 } from '../../redux/selectors';
 import {Colors} from '../../utils/values';
 import {postSession, getDoctorSessions} from '../../api/sessions';
-import {getDateFromString} from '../../utils/date';
+import {getDateFromString, addDays} from '../../utils/date';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 
 type DoctorSessionsScreenNavigationProp = StackNavigationProp<
@@ -35,6 +35,7 @@ const DoctorSessions: React.FC<Props> = () => {
   const doctor = useSelector(doctorSelector);
   const sessions = useSelector(sessionsSelector);
   const accessToken = useSelector(tokenSelector);
+  const [currentDay, setCurrentDay] = React.useState<Date>(new Date());
 
   React.useEffect(() => {
     fetchSessions();
@@ -48,6 +49,13 @@ const DoctorSessions: React.FC<Props> = () => {
       .catch(error => {
         Alert.alert('Oops!', error.message);
       });
+  }
+
+  function handleRightPress() {
+    setCurrentDay(addDays(currentDay, 2));
+  }
+  function handleLeftPress() {
+    setCurrentDay(addDays(currentDay, -2));
   }
 
   function handleDayPress(date: string, time: ZTime) {
@@ -66,11 +74,7 @@ const DoctorSessions: React.FC<Props> = () => {
             )
               .then(session => {
                 fetchSessions();
-                Alert.alert(
-                  'Success',
-                  `session prise avec succes, 
-                ${JSON.stringify(session)}`,
-                );
+                Alert.alert('Success', `session prise avec succes`);
               })
               .catch(error => {
                 Alert.alert('Oops!', error.message);
@@ -89,12 +93,12 @@ const DoctorSessions: React.FC<Props> = () => {
       </Text>
 
       <SessionPicker
-        currentDate={new Date()}
+        currentDate={currentDay}
         onDayPress={handleDayPress}
-        dayCount={3}
-        sessions={{
-          '01-02-2020': ['10:30'],
-        }}
+        dayCount={4}
+        sessions={sessions}
+        onArrowLeftPress={handleLeftPress}
+        onArrowRightPress={handleRightPress}
       />
     </ScreenContainer>
   );

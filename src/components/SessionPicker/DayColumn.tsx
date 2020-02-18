@@ -10,13 +10,13 @@ const DayColumn: React.FC<{
   availableHours: ZHours;
   width: number;
   onDayPress?: (day: string, hour: ZTime) => void;
-}> = ({day, availableHours, width, onDayPress}) => {
+}> = ({day, availableHours, width, onDayPress = () => {}}) => {
   return (
     <View style={[dcs.container, {width: `${width}%`}]}>
       {availableHours.map((hour, index) => (
         <Touchable
           onPress={() => {
-            if (typeof onDayPress === 'function') onDayPress(day, hour);
+            onDayPress(day, hour);
           }}
           key={'hour-' + index}
           containerStyle={{width: '90%', height: 70, marginVertical: 5}}

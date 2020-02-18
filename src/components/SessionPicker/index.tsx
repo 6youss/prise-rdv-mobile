@@ -12,6 +12,7 @@ import {
   getMonthName,
   getDateFromString,
   getStringFromDate,
+  dateRange,
 } from '../../utils/date';
 
 export type Hours = Array<string>;
@@ -34,6 +35,8 @@ export interface SessionPickerProps {
   sessionDuration?: number;
   sessions?: Sessions;
   onDayPress?: (day: string, hour: ZTime) => void;
+  onArrowRightPress?: (currentDate: Date) => void;
+  onArrowLeftPress?: (currentDate: Date) => void;
 }
 
 const SessionPicker: React.FC<SessionPickerProps> = ({
@@ -43,26 +46,31 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
   endingHour = ZTime.fromString('17:00'),
   sessionDuration = 30,
   sessions = {},
-  onDayPress,
+  onDayPress = () => {},
+  onArrowRightPress = () => {},
+  onArrowLeftPress = () => {},
 }) => {
-  let __sessions: ZSessions = {};
-  for (let i = 0; i < Object.keys(sessions).length; i++) {
-    if (i >= dayCount) break;
-    const date = Object.keys(sessions)[i];
-    __sessions[date] = sessions[date].map(hour => ZTime.fromString(hour));
+  let __sessions: ZSessions = {}; //sessions formated and filtered from the sessions prop
+
+  const activeDates = dateRange(currentDate, dayCount - 1);
+  for (let date of activeDates) {
+    const dateStr = getStringFromDate(date, false);
+    __sessions[dateStr] = [];
+    if (sessions[dateStr])
+      __sessions[dateStr] = sessions[dateStr].map(hour =>
+        ZTime.fromString(hour),
+      );
   }
-  for (let i = 0; i < dayCount; i++) {
-    const currentDayStr = getStringFromDate(currentDate, false);
-    if (!__sessions[currentDayStr]) {
-      __sessions[currentDayStr] = [];
-    }
-  }
+  console.log(__sessions);
 
   const dayColumnWidth = 80 / dayCount;
 
   const Arrow: React.FC<{left?: boolean}> = ({left}) => {
     return (
       <Touchable
+        onPress={() => {
+          left ? onArrowLeftPress(currentDate) : onArrowRightPress(currentDate);
+        }}
         containerStyle={{width: '10%'}}
         style={{alignItems: 'center', padding: 10}}>
         <Icon
