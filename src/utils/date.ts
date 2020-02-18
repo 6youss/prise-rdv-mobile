@@ -1,7 +1,16 @@
-export function getDateFromString(dateString: string): Date {
+import {ZTime} from './ztime';
+
+export function getDateFromString(dateTimeString: string): Date {
+  const [dateString, timeString] = dateTimeString.split('T');
+
   const [day, month, year] = dateString.split('-').map(val => parseInt(val));
   if (day > 31 || month > 12 || year < 2019)
     throw new Error('the date format should be of type DD-MM-YYYY');
+
+  if (timeString) {
+    let ztime = ZTime.fromString(timeString);
+    return new Date(year, month - 1, day, ztime.hours, ztime.minutes);
+  }
   return new Date(year, month - 1, day);
 }
 

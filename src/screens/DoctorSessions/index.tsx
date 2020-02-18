@@ -7,11 +7,16 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList, IDoctor} from '../../types';
 import styles from './styles';
 import SessionPicker from '../../components/SessionPicker';
-import {ZHour} from '../../utils/zdate';
+import {ZTime} from '../../utils/ztime';
 import {useSelector} from 'react-redux';
-import {doctorSelector} from '../../redux/selectors';
-import {RootState} from '../../redux/reducers';
+import {
+  doctorSelector,
+  patientSelector,
+  tokenSelector,
+} from '../../redux/selectors';
 import {Colors} from '../../utils/values';
+import {postSession} from '../../api/sessions';
+import {getDateFromString} from '../../utils/date';
 
 type DoctorSessionsScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -23,22 +28,40 @@ type Props = {
 };
 
 const DoctorSessions: React.FC<Props> = () => {
+  const patient = useSelector(patientSelector);
   const doctor = useSelector(doctorSelector);
+  const accessToken = useSelector(tokenSelector);
 
-  function handleDayPress(date: string, hour: ZHour) {
-    Alert.alert('ahum', date + hour.toString());
+  function handleDayPress(date: string, time: ZTime) {
+    Alert.alert(
+      'Prendre rendez vous',
+      `Confirmer la prise du rendez-vous le ${date} à ${time.toString()} ?`,
+      [
+        {
+          text: 'Confirmer',
+          onPress: () => {
+            postSession(
+              accessToken,
+              patient._id,
+              doctor._id,
+              getDateFromString(`${date}T${time.toString()}`),
+            )
+              .then(session => {
+                Alert.alert('ahum', JSON.stringify(session));
+              })
+              .catch(session => {
+                Alert.alert('ahum', session.message);
+              });
+          },
+        },
+        {text: 'Annuler'},
+      ],
+    );
   }
 
   return (
     <ScreenContainer>
-      <Text
-        style={{
-          color: Colors.primaryDark,
-          fontSize: 15,
-          alignItems: 'center',
-          textAlign: 'center',
-          padding: 10,
-        }}>
+      <Text style={styles.headerText}>
         {`Pr. ${doctor.firstName} ${doctor.lastName}`}
       </Text>
 
@@ -46,12 +69,14 @@ const DoctorSessions: React.FC<Props> = () => {
         onDayPress={handleDayPress}
         dayCount={3}
         sessions={{
-          '01-02-2020': [],
-          '02-02-2020': ['09:00', '10:30'],
-          '03-02-2020': ['10:00', '11:30'],
-          '04-02-2020': ['10:00', '11:30'],
-          '05-02-2020': ['10:00', '11:30'],
-          '06-02-2020': ['10:00', '11:30'],
+          '01-02-2020': ['08:00', '08:30', '16:30'],
+          '02-02-2020': [],
+          '03-02-2020': [],
+          '04-02-2020': [],
+          '05-02-2020': [],
+          '06-02-2020': [],
+          '07-02-2020': [],
+          '08-02-2020': [],
         }}
       />
     </ScreenContainer>

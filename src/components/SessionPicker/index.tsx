@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, Alert, ScrollView} from 'react-native';
-import {ZHour} from '../../utils/zdate';
+import {View, Text, ScrollView} from 'react-native';
+import {ZTime} from '../../utils/ztime';
 import styles, {dcs} from './styles';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -11,7 +11,7 @@ import {getDayName, getMonthName, getDateFromString} from '../../utils/date';
 
 export type Hours = Array<string>;
 
-export type ZHours = Array<ZHour>;
+export type ZHours = Array<ZTime>;
 
 export interface Sessions {
   [date: string]: Hours;
@@ -22,34 +22,27 @@ export interface ZSessions {
 }
 
 export interface SessionPickerProps {
-  dayCount: number;
-  startingHour?: ZHour;
-  endingHour?: ZHour;
+  dayCount: 1 | 2 | 3 | 4 | 5;
+  startingHour?: ZTime;
+  endingHour?: ZTime;
   sessionDuration?: number;
   sessions: Sessions;
-  onDayPress?: (day: string, hour: ZHour) => void;
+  onDayPress?: (day: string, hour: ZTime) => void;
 }
 
 const SessionPicker: React.FC<SessionPickerProps> = ({
   dayCount,
-  startingHour = ZHour.fromString('08:00'),
-  endingHour = ZHour.fromString('17:00'),
+  startingHour = ZTime.fromString('08:00'),
+  endingHour = ZTime.fromString('17:00'),
   sessionDuration = 30,
   sessions,
   onDayPress,
 }) => {
-  if (Object.keys(sessions).length < dayCount) {
-    console.warn(
-      'max dayCount is 5 and it must be less than the sessions number',
-    );
-    dayCount = Object.keys(sessions).length % 5;
-  }
-
   let __sessions: ZSessions = {};
   for (let i = 0; i < Object.keys(sessions).length; i++) {
     if (i >= dayCount) break;
     const date = Object.keys(sessions)[i];
-    __sessions[date] = sessions[date].map(hour => ZHour.fromString(hour));
+    __sessions[date] = sessions[date].map(hour => ZTime.fromString(hour));
   }
 
   const dayColumnWidth = 80 / dayCount;
@@ -105,7 +98,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           flexGrow: 1,
         }}>
         {Object.keys(__sessions).map(sessionDate => {
-          const availableHours = ZHour.filterAvailableHours(
+          const availableHours = ZTime.filterAvailableHours(
             startingHour,
             endingHour,
             sessionDuration,

@@ -2,10 +2,10 @@ import {StyleSheet} from 'react-native';
 import {Colors} from '../../utils/values';
 
 const styles = StyleSheet.create({
-  container: {height: '100%', backgroundColor: Colors.white},
+  container: {flex: 1, backgroundColor: Colors.white},
   searchContainer: {
     backgroundColor: Colors.primary,
-    paddingVertical: 30,
+    paddingVertical: 20,
     paddingHorizontal: 15,
     alignItems: 'center',
   },
@@ -26,8 +26,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   doctorIllustration: {
+    resizeMode: 'contain',
     width: '100%',
-    height: 300,
+    height: '40%',
   },
 });
 export default styles;

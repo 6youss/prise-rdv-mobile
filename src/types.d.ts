@@ -1,7 +1,14 @@
 declare module '*.jpg';
 declare module '*.png';
 
+export interface IUser {
+  id: string;
+  username: string;
+  userType: 'patient' | 'doctor';
+  accessToken: string | undefined;
+}
 export interface IDoctor {
+  _id: string;
   firstName: string;
   lastName: string;
   phone: string;
@@ -10,6 +17,7 @@ export interface IDoctor {
 }
 
 export interface IPatient {
+  _id: string;
   firstName: string;
   lastName: string;
 }
@@ -17,12 +25,10 @@ export interface IUserProfile {
   patient: IPatient;
   doctor: IDoctor;
 }
-
-export interface IUser {
-  id: string;
-  username: string;
-  userType: 'patient' | 'doctor';
-  accessToken: string | undefined;
+export interface ISession {
+  patient: string;
+  doctor: string;
+  date: Date;
 }
 
 export {RootStackParamList} from './Router';

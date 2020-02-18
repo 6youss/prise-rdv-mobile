@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "emulator-ls": "emulator -list-avds",
-    "emulator": "emulator -avd Pixel_3_API_29"
+    "emulator": "emulator -avd Pixel_XL_API_29"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.6",

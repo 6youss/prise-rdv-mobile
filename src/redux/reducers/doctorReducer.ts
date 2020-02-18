@@ -2,8 +2,9 @@ import {DoctorAction, DoctorActionTypes} from '../actions/doctorActions';
 import {IDoctor} from '../../types';
 
 const initState: IDoctor = {
-  firstName: 'Flen',
-  lastName: 'Benflen',
+  _id: 'random id',
+  firstName: 'Doctor',
+  lastName: 'Name',
   address: 'Somewhere i belong',
   holidays: [],
   phone: '0000000000',

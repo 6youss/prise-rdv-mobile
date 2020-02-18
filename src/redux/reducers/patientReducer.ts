@@ -2,8 +2,9 @@ import {IPatient} from '../../types';
 import {PatientAction} from '../actions/patientActions';
 
 const initState: IPatient = {
-  firstName: 'Flen',
-  lastName: 'Benflen',
+  _id: 'random id',
+  firstName: 'Patient',
+  lastName: 'Name',
 };
 
 function reducer(

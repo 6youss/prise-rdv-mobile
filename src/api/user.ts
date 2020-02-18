@@ -20,7 +20,6 @@ export async function login(
 }
 
 export async function getUser(accessToken: string): Promise<IUserProfile> {
-  console.log('getting user with', accessToken);
   const res = await fetch(`${BASE_URL}/user/`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
