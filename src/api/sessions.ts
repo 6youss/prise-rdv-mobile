@@ -1,4 +1,4 @@
-import {ISession} from '../types';
+import {ISession, ISessionDetails} from '../types';
 import {BASE_URL} from '../utils/values';
 
 export async function postSession(
@@ -35,6 +35,22 @@ export async function getDoctorSessions(
   });
   if (res.ok) {
     return (await res.json()).sessions;
+  }
+  throw new Error(await res.text());
+}
+
+export async function getSessionDetails(
+  accessToken: string | undefined,
+  sessionId: string,
+): Promise<ISessionDetails> {
+  const res = await fetch(`${BASE_URL}/sessions/${sessionId}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+  });
+  if (res.ok) {
+    return (await res.json()).session;
   }
   throw new Error(await res.text());
 }

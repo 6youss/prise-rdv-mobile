@@ -6,7 +6,14 @@ import {
 
 import {useSelector, useDispatch} from 'react-redux';
 
-import {Splash, FindDoctor, ReserveSession, Login, DoctorHome} from './screens';
+import {
+  Splash,
+  FindDoctor,
+  ReserveSession,
+  Login,
+  DoctorHome,
+  SessionDetail,
+} from './screens';
 
 import {getUser} from './api/user';
 import {setPatientAction} from './redux/actions/patientActions';
@@ -19,6 +26,7 @@ export type RootStackParamList = {
   FindDoctor: undefined;
   DoctorSessions: undefined;
   DoctorHome: undefined;
+  SessionDetail: {id: string};
 };
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -76,6 +84,7 @@ export default function Router() {
       ) : (
         <>
           <Stack.Screen name="DoctorHome" component={DoctorHome} />
+          <Stack.Screen name="SessionDetail" component={SessionDetail} />
         </>
       )}
     </Stack.Navigator>

@@ -32,6 +32,11 @@ export interface ISession {
   doctor: string;
   date: string;
 }
+export interface ISessionDetails {
+  _id: string;
+  date: string;
+  patientDetails: IPatient;
+}
 
 export {RootStackParamList} from './Router';
 export {RootState} from './redux/reducers/index';

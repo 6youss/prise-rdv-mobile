@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Alert} from 'react-native';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../../Router';
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -10,57 +11,44 @@ import {
   sessionsSelector,
 } from '../../redux/selectors';
 import {ScreenContainer} from '../../components';
-import SessionPicker, {
-  onDayPressFunction,
-} from '../../components/SessionPicker';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
-import {getDoctorSessions} from '../../api/sessions';
+import {getSessionDetails} from '../../api/sessions';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  'DoctorHome'
+  'SessionDetail'
 >;
+type ProfileScreenRouteProp = RouteProp<RootStackParamList, 'SessionDetail'>;
 
 type Props = {
   navigation: FindDoctorScreenNavigationProp;
+  route: ProfileScreenRouteProp;
 };
-const DoctorHome: React.FC<Props> = ({navigation}) => {
+const SessionDetail: React.FC<Props> = ({navigation, route}) => {
   const dispatch = useDispatch();
-  const doctor = useSelector(doctorSelector);
+
   const accessToken = useSelector(tokenSelector);
-  const sessions = useSelector(sessionsSelector);
+  const sessionId = route.params.id;
 
   React.useEffect(() => {
     fetchSessions();
   }, []);
 
   function fetchSessions() {
-    getDoctorSessions(accessToken, doctor._id)
-      .then(sessions => {
-        dispatch(setSearchedDoctorSessionsAction(sessions));
+    getSessionDetails(accessToken, sessionId)
+      .then(sessionDetails => {
+        Alert.alert('hh', JSON.stringify(sessionDetails));
       })
       .catch(error => {
         Alert.alert('Oops!', error.message);
       });
   }
 
-  const handleDayPress: onDayPressFunction = (day, hour) => {
-    if (hour.id) {
-      navigation.navigate('SessionDetail', {id: hour.id});
-    } else {
-      throw new Error('unexpected undefined session id');
-    }
-  };
-
   return (
     <ScreenContainer>
-      <SessionPicker
-        reverseFilter
-        sessions={sessions}
-        onDayPress={handleDayPress}
-      />
+      <Text>ahum ahum</Text>
     </ScreenContainer>
   );
 };
 
-export default DoctorHome;
+export default SessionDetail;
