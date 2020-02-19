@@ -15,7 +15,7 @@ import {
   dateRange,
 } from '../../utils/date';
 
-export type Hours = Array<string>;
+export type Hours = Array<{id: string; time: string} | string>;
 
 export interface Sessions {
   [date: string]: Hours;
@@ -28,7 +28,8 @@ export interface ZSessions {
 }
 
 export interface SessionPickerProps {
-  currentDate: Date;
+  reverseFilter?: boolean;
+  currentDate?: Date;
   dayCount?: 1 | 2 | 3 | 4 | 5;
   startingHour?: ZTime;
   endingHour?: ZTime;
@@ -40,6 +41,7 @@ export interface SessionPickerProps {
 }
 
 const SessionPicker: React.FC<SessionPickerProps> = ({
+  reverseFilter = false,
   currentDate = new Date(),
   dayCount = 3,
   startingHour = ZTime.fromString('08:00'),
@@ -57,11 +59,14 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
     const dateStr = getStringFromDate(date, false);
     __sessions[dateStr] = [];
     if (sessions[dateStr])
-      __sessions[dateStr] = sessions[dateStr].map(hour =>
-        ZTime.fromString(hour),
-      );
+      __sessions[dateStr] = sessions[dateStr].map(hour => {
+        if (typeof hour === 'string') {
+          return ZTime.fromString(hour);
+        } else {
+          return ZTime.fromString(hour.time, hour.id);
+        }
+      });
   }
-  console.log(__sessions);
 
   const dayColumnWidth = 80 / dayCount;
 
@@ -81,8 +86,8 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
     );
   };
 
-  return (
-    <View style={styles.container}>
+  const PickerHeader: React.FC = () => {
+    return (
       <View
         style={{
           flexDirection: 'row',
@@ -108,7 +113,12 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
         })}
         <Arrow />
       </View>
+    );
+  };
 
+  return (
+    <View style={styles.container}>
+      <PickerHeader />
       <ScrollView
         style={{flex: 1}}
         contentContainerStyle={{
@@ -119,12 +129,14 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           flexGrow: 1,
         }}>
         {Object.keys(__sessions).map(sessionDate => {
-          const availableHours = ZTime.filterAvailableHours(
-            startingHour,
-            endingHour,
-            sessionDuration,
-            __sessions[sessionDate],
-          );
+          const availableHours = reverseFilter
+            ? __sessions[sessionDate]
+            : ZTime.filterAvailableHours(
+                startingHour,
+                endingHour,
+                sessionDuration,
+                __sessions[sessionDate],
+              );
           return (
             <DayColumn
               width={dayColumnWidth}

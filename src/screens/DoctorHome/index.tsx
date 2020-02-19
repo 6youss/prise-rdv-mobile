@@ -1,11 +1,18 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../Router';
-import {useSelector} from 'react-redux';
-import {doctorSelector} from '../../redux/selectors';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  doctorSelector,
+  tokenSelector,
+  sessionsSelector,
+} from '../../redux/selectors';
 import {ScreenContainer} from '../../components';
+import SessionPicker from '../../components/SessionPicker';
+import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
+import {getDoctorSessions} from '../../api/sessions';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -16,13 +23,27 @@ type Props = {
   navigation: FindDoctorScreenNavigationProp;
 };
 const DoctorHome: React.FC<Props> = () => {
+  const dispatch = useDispatch();
   const doctor = useSelector(doctorSelector);
+  const accessToken = useSelector(tokenSelector);
+  const sessions = useSelector(sessionsSelector);
 
+  React.useEffect(() => {
+    fetchSessions();
+  }, []);
+
+  function fetchSessions() {
+    getDoctorSessions(accessToken, doctor._id)
+      .then(sessions => {
+        dispatch(setSearchedDoctorSessionsAction(sessions));
+      })
+      .catch(error => {
+        Alert.alert('Oops!', error.message);
+      });
+  }
   return (
     <ScreenContainer>
-      <View style={styles.container}>
-        <Text>{`What's up doc ${doctor.firstName} ${doctor.lastName}`}</Text>
-      </View>
+      <SessionPicker reverseFilter sessions={sessions} />
     </ScreenContainer>
   );
 };

@@ -28,7 +28,7 @@ type Props = {
   navigation: DoctorSessionsScreenNavigationProp;
 };
 
-const DoctorSessions: React.FC<Props> = () => {
+const ReserveSession: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const patient = useSelector(patientSelector);
   const doctor = useSelector(doctorSelector);
@@ -103,4 +103,4 @@ const DoctorSessions: React.FC<Props> = () => {
   );
 };
 
-export default DoctorSessions;
+export default ReserveSession;

@@ -6,7 +6,7 @@ import {
 
 import {useSelector, useDispatch} from 'react-redux';
 
-import {Splash, FindDoctor, DoctorSessions, Login, DoctorHome} from './screens';
+import {Splash, FindDoctor, ReserveSession, Login, DoctorHome} from './screens';
 
 import {getUser} from './api/user';
 import {setPatientAction} from './redux/actions/patientActions';
@@ -71,7 +71,7 @@ export default function Router() {
       ) : userType === 'patient' ? (
         <>
           <Stack.Screen name="FindDoctor" component={FindDoctor} />
-          <Stack.Screen name="DoctorSessions" component={DoctorSessions} />
+          <Stack.Screen name="DoctorSessions" component={ReserveSession} />
         </>
       ) : (
         <>
