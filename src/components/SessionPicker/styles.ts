@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const dcs = StyleSheet.create({
+export const dcstyle = StyleSheet.create({
   container: {
     width: '20%',
     alignItems: 'center',

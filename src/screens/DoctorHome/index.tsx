@@ -43,7 +43,13 @@ const DoctorHome: React.FC<Props> = () => {
   }
   return (
     <ScreenContainer>
-      <SessionPicker reverseFilter sessions={sessions} />
+      <SessionPicker
+        reverseFilter
+        sessions={sessions}
+        onDayPress={(day, hour) => {
+          console.log(day, hour);
+        }}
+      />
     </ScreenContainer>
   );
 };

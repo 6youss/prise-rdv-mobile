@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import {ZTime} from '../../utils/ztime';
-import styles, {dcs} from './styles';
+import styles, {dcstyle} from './styles';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Touchable from '../Touchable';
@@ -27,6 +27,8 @@ export interface ZSessions {
   [date: string]: ZHours;
 }
 
+export type onDayPressFunction = (day: string, hour: ZTime) => void;
+
 export interface SessionPickerProps {
   reverseFilter?: boolean;
   currentDate?: Date;
@@ -35,7 +37,7 @@ export interface SessionPickerProps {
   endingHour?: ZTime;
   sessionDuration?: number;
   sessions?: Sessions;
-  onDayPress?: (day: string, hour: ZTime) => void;
+  onDayPress?: onDayPressFunction;
   onArrowRightPress?: (currentDate: Date) => void;
   onArrowLeftPress?: (currentDate: Date) => void;
 }
@@ -104,8 +106,8 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
               style={{
                 width: `${dayColumnWidth}%`,
               }}>
-              <Text style={dcs.day}>{getDayName(date)}</Text>
-              <Text style={dcs.month}>{`${date.getDate()} ${getMonthName(
+              <Text style={dcstyle.day}>{getDayName(date)}</Text>
+              <Text style={dcstyle.month}>{`${date.getDate()} ${getMonthName(
                 date,
               )}`}</Text>
             </View>
