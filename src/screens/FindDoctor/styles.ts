@@ -1,8 +1,9 @@
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../utils/values';
+import {screenHeight} from '../../utils/dimentions';
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: Colors.white},
+  container: {flex: 1, height: '100%', backgroundColor: Colors.white},
   searchContainer: {
     backgroundColor: Colors.primary,
     paddingVertical: 20,
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   doctorIllustration: {
     resizeMode: 'contain',
     width: '100%',
-    height: '40%',
+    height: screenHeight(40),
   },
 });
 export default styles;

@@ -30,6 +30,7 @@ function sessionsArrayToMap(sessionsArray: Array<ISession>): Sessions {
 
     if (!sessionsMap[dateString]) {
       sessionsMap[dateString] = [];
+      sessionsMap[dateString].push(timeString);
     } else {
       sessionsMap[dateString].push(timeString);
     }

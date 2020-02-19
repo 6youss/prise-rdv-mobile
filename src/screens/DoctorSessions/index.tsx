@@ -15,7 +15,6 @@ import {
   tokenSelector,
   sessionsSelector,
 } from '../../redux/selectors';
-import {Colors} from '../../utils/values';
 import {postSession, getDoctorSessions} from '../../api/sessions';
 import {getDateFromString, addDays} from '../../utils/date';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
@@ -95,7 +94,7 @@ const DoctorSessions: React.FC<Props> = () => {
       <SessionPicker
         currentDate={currentDay}
         onDayPress={handleDayPress}
-        dayCount={4}
+        dayCount={3}
         sessions={sessions}
         onArrowLeftPress={handleLeftPress}
         onArrowRightPress={handleRightPress}
