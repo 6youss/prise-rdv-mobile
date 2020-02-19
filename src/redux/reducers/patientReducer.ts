@@ -12,7 +12,7 @@ function reducer(
   action: PatientAction,
 ): IPatient {
   switch (action.type) {
-    case 'SET_PATIENT_PROFILE':
+    case 'SET_PATIENT':
       return {
         ...prevState,
         ...action.payload,

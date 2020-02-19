@@ -6,16 +6,19 @@ import {
 
 import {useSelector, useDispatch} from 'react-redux';
 
-import {Splash, FindDoctor, DoctorSessions, Login} from './screens';
+import {Splash, FindDoctor, DoctorSessions, Login, DoctorHome} from './screens';
 
 import {getUser} from './api/user';
-import {setPatientProfileAction} from './redux/actions/patientActions';
-import {IUser, RootState} from './types';
+import {setPatientAction} from './redux/actions/patientActions';
+
+import {tokenSelector, userTypeSelector} from './redux/selectors';
+import {setDoctorAction} from './redux/actions/doctorActions';
 export type RootStackParamList = {
   Splash: undefined;
   Login: undefined;
   FindDoctor: undefined;
   DoctorSessions: undefined;
+  DoctorHome: undefined;
 };
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -28,9 +31,8 @@ export default function Router() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [needAuth, setNeedAuth] = React.useState(true);
 
-  const {accessToken} = useSelector(function(store: RootState): IUser {
-    return store.user;
-  });
+  const accessToken = useSelector(tokenSelector);
+  const userType = useSelector(userTypeSelector);
 
   React.useEffect(() => {
     async function auth() {
@@ -40,7 +42,13 @@ export default function Router() {
           throw new Error('access token not found');
         }
         const userProfile = await getUser(accessToken);
-        dispatch(setPatientProfileAction(userProfile.patient));
+
+        if (userType === 'doctor') {
+          dispatch(setDoctorAction(userProfile.doctor));
+        } else {
+          dispatch(setPatientAction(userProfile.patient));
+        }
+
         setNeedAuth(false);
         setTimeout(() => {
           setIsLoading(false);
@@ -60,10 +68,14 @@ export default function Router() {
         <Stack.Screen name="Splash" component={Splash} />
       ) : needAuth ? (
         <Stack.Screen name="Login" component={Login} />
-      ) : (
+      ) : userType === 'patient' ? (
         <>
           <Stack.Screen name="FindDoctor" component={FindDoctor} />
           <Stack.Screen name="DoctorSessions" component={DoctorSessions} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="DoctorHome" component={DoctorHome} />
         </>
       )}
     </Stack.Navigator>

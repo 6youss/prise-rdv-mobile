@@ -10,12 +10,11 @@ import DoctorItem from '../../components/DoctorItem';
 import FloatingButton from '../../components/FloatingButton';
 import doctorIllustration from '../../assets/doctorIllustration.jpg';
 import {Colors} from '../../utils/values';
+import {doctorSelector, patientSelector} from '../../redux/selectors';
+import {setDoctorAction} from '../../redux/actions/doctorActions';
 
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootState} from '../../redux/reducers';
-import {RootStackParamList, IPatient, IDoctor} from '../../types';
-import {doctorSelector, patientSelector} from '../../redux/selectors';
-import {setSearchedDoctorAction} from '../../redux/actions/doctorActions';
+import {RootStackParamList, IDoctor} from '../../types';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -28,7 +27,6 @@ type Props = {
 const FindDoctor: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch();
   const patient = useSelector(patientSelector);
-  const doctor = useSelector(doctorSelector);
 
   const [searchValue, setSearchValue] = React.useState<string>(
     __DEV__ ? '0758081532' : '',
@@ -48,7 +46,7 @@ const FindDoctor: React.FC<Props> = ({navigation}) => {
       setLoading(true);
       const doctor = await fetchDoctorByPhone(searchValue);
       setFoundDoctor(doctor);
-      dispatch(setSearchedDoctorAction(doctor));
+      dispatch(setDoctorAction(doctor));
       setLoading(false);
     } catch (error) {
       setLoading(false);

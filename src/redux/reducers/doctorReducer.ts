@@ -15,7 +15,7 @@ function reducer(
   action: DoctorAction,
 ): IDoctor {
   switch (action.type) {
-    case DoctorActionTypes.SET_SEARCHED_DOCTOR:
+    case DoctorActionTypes.SET_DOCTOR:
       return {
         ...prevState,
         ...action.payload,

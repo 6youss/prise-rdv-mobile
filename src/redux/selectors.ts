@@ -15,3 +15,7 @@ export function sessionsSelector(store: RootState): Sessions {
 export function tokenSelector(store: RootState): string | undefined {
   return store.user.accessToken;
 }
+
+export function userTypeSelector(store: RootState): 'doctor' | 'patient' {
+  return store.user.userType;
+}

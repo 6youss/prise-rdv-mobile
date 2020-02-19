@@ -8,7 +8,8 @@ import {signInAction} from '../../redux/actions/userActions';
 const Login: React.FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    login('admina', 'admin')
+    // login('admina', 'admin') //patient
+    login('phil', 'mcgraw') //doctor
       .then(user => {
         dispatch(signInAction(user));
       })
