@@ -1,7 +1,7 @@
 import {BASE_URL} from '../utils/values';
 import {IUser, IUserProfile} from '../types';
 
-export async function login(
+export async function postLogin(
   username: string,
   password: string,
 ): Promise<IUser> {

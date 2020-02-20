@@ -6,7 +6,13 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.lightGray,
+    backgroundColor: Colors.primary,
+    padding: 40,
+  },
+  loginLogo: {
+    width: 60,
+    height: 60,
+    resizeMode: 'center',
   },
 });
 export default styles;

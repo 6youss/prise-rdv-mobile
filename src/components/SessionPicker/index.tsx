@@ -75,6 +75,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
   const Arrow: React.FC<{left?: boolean}> = ({left}) => {
     return (
       <Touchable
+        borderRadius={40}
         onPress={() => {
           left ? onArrowLeftPress(currentDate) : onArrowRightPress(currentDate);
         }}

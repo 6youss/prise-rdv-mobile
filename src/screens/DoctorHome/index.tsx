@@ -15,6 +15,8 @@ import SessionPicker, {
 } from '../../components/SessionPicker';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 import {getDoctorSessions} from '../../api/sessions';
+import {Colors} from '../../utils/values';
+import {addDays} from '../../utils/date';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -29,6 +31,7 @@ const DoctorHome: React.FC<Props> = ({navigation}) => {
   const doctor = useSelector(doctorSelector);
   const accessToken = useSelector(tokenSelector);
   const sessions = useSelector(sessionsSelector);
+  const [currentDay, setCurrentDay] = React.useState<Date>(new Date());
 
   React.useEffect(() => {
     fetchSessions();
@@ -52,13 +55,28 @@ const DoctorHome: React.FC<Props> = ({navigation}) => {
     }
   };
 
+  function handleRightPress() {
+    setCurrentDay(addDays(currentDay, 2));
+  }
+  function handleLeftPress() {
+    setCurrentDay(addDays(currentDay, -2));
+  }
+
   return (
-    <ScreenContainer>
-      <SessionPicker
-        reverseFilter
-        sessions={sessions}
-        onDayPress={handleDayPress}
-      />
+    <ScreenContainer
+      status={{backgroundColor: Colors.white, barStyle: 'dark-content'}}
+      safeArea={{style: {backgroundColor: Colors.white}}}>
+      <Text style={styles.calendarTitle}>Votre calendrier de visites</Text>
+      <View style={styles.sessionPickerContainer}>
+        <SessionPicker
+          currentDate={currentDay}
+          reverseFilter
+          sessions={sessions}
+          onDayPress={handleDayPress}
+          onArrowLeftPress={handleLeftPress}
+          onArrowRightPress={handleRightPress}
+        />
+      </View>
     </ScreenContainer>
   );
 };
