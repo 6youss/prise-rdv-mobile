@@ -11,4 +11,5 @@ export const Colors = {
   black: '#000',
 };
 
-export const BASE_URL = 'http://192.168.12.112:8000/api';
+// export const BASE_URL = 'http://192.168.12.112:8000/api'; //local
+export const BASE_URL = 'https://zedoctolib.herokuapp.com/api/';
