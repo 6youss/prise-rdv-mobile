@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, Alert} from 'react-native';
 import styles from './styles';
 import {postLogin} from '../../api/user';
 import {useDispatch} from 'react-redux';
 import {signInAction} from '../../redux/actions/userActions';
-import {ScreenContainer, Input, Touchable} from '../../components';
+import {ScreenContainer, Input} from '../../components';
 import Button from '../../components/Button';
 import logoWhite from '../../assets/logoWhite.png';
 import {Colors} from '../../utils/values';
@@ -27,7 +27,7 @@ const Login: React.FC = () => {
         dispatch(signInAction(user));
       })
       .catch(error => {
-        console.log(error.message);
+        Alert.alert('Oops!', error.message);
       });
   }
 
@@ -41,11 +41,17 @@ const Login: React.FC = () => {
 
           <Input
             value={username}
+            onChangeText={text => {
+              setUsername(text);
+            }}
             style={styles.loginInput}
             placeholder="Nom d'utilisateur"
           />
           <Input
             value={password}
+            onChangeText={text => {
+              setPassword(text);
+            }}
             style={[styles.loginInput, {marginBottom: 40}]}
             placeholder="Mot de passe"
             secureTextEntry
