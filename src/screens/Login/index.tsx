@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {SafeAreaView, View, Text, StatusBar, Image} from 'react-native';
+import React from 'react';
+import {View, Image} from 'react-native';
 import styles from './styles';
 import {postLogin} from '../../api/user';
 import {useDispatch} from 'react-redux';
@@ -8,6 +8,7 @@ import {ScreenContainer, Input, Touchable} from '../../components';
 import Button from '../../components/Button';
 import logoWhite from '../../assets/logoWhite.png';
 import {Colors} from '../../utils/values';
+
 const Login: React.FC = () => {
   const dispatch = useDispatch();
 
@@ -40,23 +41,12 @@ const Login: React.FC = () => {
 
           <Input
             value={username}
-            style={{
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: '100',
-              marginVertical: 20,
-            }}
+            style={styles.loginInput}
             placeholder="Nom d'utilisateur"
           />
           <Input
             value={password}
-            style={{
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: '100',
-              marginVertical: 20,
-              marginBottom: 40,
-            }}
+            style={[styles.loginInput, {marginBottom: 40}]}
             placeholder="Mot de passe"
             secureTextEntry
           />

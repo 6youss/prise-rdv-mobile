@@ -14,5 +14,11 @@ const styles = StyleSheet.create({
     height: 60,
     resizeMode: 'center',
   },
+  loginInput: {
+    color: Colors.white,
+    fontSize: 20,
+    fontWeight: '100',
+    marginVertical: 20,
+  },
 });
 export default styles;
