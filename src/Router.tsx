@@ -11,7 +11,7 @@ import {
   FindDoctor,
   ReserveSession,
   Login,
-  DoctorHome,
+  DoctorCalendar,
   SessionDetail,
 } from './screens';
 
@@ -26,7 +26,7 @@ export type RootStackParamList = {
   Login: undefined;
   FindDoctor: undefined;
   DoctorSessions: undefined;
-  DoctorHome: undefined;
+  DoctorCalendar: undefined;
   SessionDetail: {id: string};
 };
 const Stack = createStackNavigator<RootStackParamList>();
@@ -84,7 +84,7 @@ export default function Router() {
         </>
       ) : (
         <>
-          <Stack.Screen name="DoctorHome" component={DoctorHome} />
+          <Stack.Screen name="DoctorCalendar" component={DoctorCalendar} />
           <Stack.Screen name="SessionDetail" component={SessionDetail} />
         </>
       )}

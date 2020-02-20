@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import {View, Text, ScrollView, RefreshControl} from 'react-native';
 import {ZTime} from '../../utils/ztime';
 import styles, {dcstyle} from './styles';
 
@@ -38,6 +38,7 @@ export interface SessionPickerProps {
   sessionDuration?: number;
   sessions?: Sessions;
   onDayPress?: onDayPressFunction;
+  onRefresh?: () => void;
   onArrowRightPress?: (currentDate: Date) => void;
   onArrowLeftPress?: (currentDate: Date) => void;
 }
@@ -51,6 +52,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
   sessionDuration = 30,
   sessions = {},
   onDayPress = () => {},
+  onRefresh = () => {},
   onArrowRightPress = () => {},
   onArrowLeftPress = () => {},
 }) => {
@@ -124,13 +126,10 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
       <PickerHeader />
       <ScrollView
         style={{flex: 1}}
-        contentContainerStyle={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          paddingVertical: 10,
-          backgroundColor: Colors.lightGray,
-          flexGrow: 1,
-        }}>
+        refreshControl={
+          <RefreshControl refreshing={false} onRefresh={onRefresh} />
+        }
+        contentContainerStyle={styles.hoursContainer}>
         {Object.keys(__sessions).map(sessionDate => {
           const availableHours = reverseFilter
             ? __sessions[sessionDate]

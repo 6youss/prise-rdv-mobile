@@ -5,6 +5,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     flex: 1,
   },
+  hoursContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    backgroundColor: Colors.lightGray,
+    flexGrow: 1,
+  },
 });
 
 export const dcstyle = StyleSheet.create({

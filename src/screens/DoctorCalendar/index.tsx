@@ -20,13 +20,13 @@ import {addDays} from '../../utils/date';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  'DoctorHome'
+  'DoctorCalendar'
 >;
 
 type Props = {
   navigation: FindDoctorScreenNavigationProp;
 };
-const DoctorHome: React.FC<Props> = ({navigation}) => {
+const DoctorCalendar: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch();
   const doctor = useSelector(doctorSelector);
   const accessToken = useSelector(tokenSelector);
@@ -81,4 +81,4 @@ const DoctorHome: React.FC<Props> = ({navigation}) => {
   );
 };
 
-export default DoctorHome;
+export default DoctorCalendar;
