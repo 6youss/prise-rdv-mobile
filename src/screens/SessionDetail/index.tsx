@@ -5,14 +5,11 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../../Router';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  doctorSelector,
-  tokenSelector,
-  sessionsSelector,
-} from '../../redux/selectors';
+import {tokenSelector} from '../../redux/selectors';
 import {ScreenContainer} from '../../components';
-import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 import {getSessionDetails} from '../../api/sessions';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {ISessionDetails} from '../../types';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -24,20 +21,23 @@ type Props = {
   navigation: FindDoctorScreenNavigationProp;
   route: ProfileScreenRouteProp;
 };
-const SessionDetail: React.FC<Props> = ({navigation, route}) => {
-  const dispatch = useDispatch();
 
+const SessionDetail: React.FC<Props> = ({route}) => {
   const accessToken = useSelector(tokenSelector);
   const sessionId = route.params.id;
+  const [sessionDetails, setSessionDetails] = React.useState<
+    ISessionDetails | undefined
+  >(undefined);
 
   React.useEffect(() => {
-    fetchSessions();
+    fetchSession();
   }, []);
 
-  function fetchSessions() {
+  function fetchSession() {
     getSessionDetails(accessToken, sessionId)
       .then(sessionDetails => {
-        Alert.alert('hh', JSON.stringify(sessionDetails));
+        setSessionDetails(sessionDetails);
+        Alert.alert('ahum', JSON.stringify(sessionDetails));
       })
       .catch(error => {
         Alert.alert('Oops!', error.message);
@@ -46,7 +46,12 @@ const SessionDetail: React.FC<Props> = ({navigation, route}) => {
 
   return (
     <ScreenContainer>
-      <Text>ahum ahum</Text>
+      <View style={styles.container}>
+        <Icon name="arrow-left" />
+        <Text style={styles.date}>{sessionDetails?.date}</Text>
+        <Text>{sessionDetails?.patientDetails?.firstName}</Text>
+        <Text>{sessionDetails?.patientDetails?.lastName}</Text>
+      </View>
     </ScreenContainer>
   );
 };

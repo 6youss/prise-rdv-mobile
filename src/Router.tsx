@@ -20,6 +20,7 @@ import {setPatientAction} from './redux/actions/patientActions';
 
 import {tokenSelector, userTypeSelector} from './redux/selectors';
 import {setDoctorAction} from './redux/actions/doctorActions';
+
 export type RootStackParamList = {
   Splash: undefined;
   Login: undefined;

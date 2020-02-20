@@ -8,5 +8,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.lightGray,
   },
+  date: {
+    color: Colors.black,
+  },
 });
 export default styles;
