@@ -60,12 +60,31 @@ const DoctorProfile: React.FC<Props> = ({navigation}) => {
           elevation: 40,
         }}>
         <View style={{alignItems: 'center'}}>
-          <Avatar />
-          <Text>{`Pr. ${doctor.firstName} ${doctor.lastName}`}</Text>
+          <Avatar style={{margin: 20}} />
+          <Text
+            style={{
+              color: Colors.darkGray,
+              fontWeight: 'bold',
+              margin: 7,
+            }}>{`Pr. ${doctor.firstName} ${doctor.lastName}`}</Text>
+          <Text
+            style={{
+              width: screenWidth(60),
+              textAlign: 'center',
+              color: Colors.darkGray,
+            }}>{`${doctor.address}`}</Text>
         </View>
         <View style={{alignItems: 'center', padding: 20}}>
-          <Text>{`${doctor.phone}`}</Text>
-          <Text>{`${doctor.address}`}</Text>
+          <Text
+            style={{
+              width: screenWidth(60),
+              textAlign: 'center',
+              fontSize: 26,
+              fontWeight: 'bold',
+              color: Colors.secondary,
+              letterSpacing: 2,
+              margin: 20,
+            }}>{`${doctor.phone}`}</Text>
         </View>
         <View style={{flex: 1, justifyContent: 'flex-end', padding: 20}}>
           <Button
