@@ -9,8 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightGray,
   },
   sessionPickerContainer: {
-    margin: 20,
-    marginBottom: 0,
+    marginHorizontal: 20,
     flex: 1,
     overflow: 'hidden',
     borderRadius: 20,
@@ -23,8 +22,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
     // fontWeight: 'bold',
     color: Colors.darkGray,
-    marginStart: 20,
-    marginTop: 20,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 7,
   },
 });
 export default styles;

@@ -2,7 +2,10 @@ import React from 'react';
 import {ActivityIndicator, View, StyleSheet} from 'react-native';
 import {Colors} from '../utils/values';
 
-const Loader: React.FC<{duration?: number}> = ({duration}) => {
+const Loader: React.FC<{color?: string; duration?: number}> = ({
+  color = Colors.primary,
+  duration,
+}) => {
   const [animating, setAnimating] = React.useState(true);
 
   React.useEffect(() => {
@@ -21,7 +24,7 @@ const Loader: React.FC<{duration?: number}> = ({duration}) => {
     <View style={styles.container}>
       <ActivityIndicator
         animating={animating}
-        color={Colors.primary}
+        color={color}
         size="large"
         style={styles.activityIndicator}
       />

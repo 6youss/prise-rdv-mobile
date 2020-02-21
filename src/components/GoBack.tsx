@@ -4,11 +4,14 @@ import {Touchable} from '.';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Colors} from '../utils/values';
 
-const GoBack: React.FC<{onPress: () => void}> = ({onPress}) => {
+const GoBack: React.FC<{color?: string; onPress: () => void}> = ({
+  onPress,
+  color = Colors.primary,
+}) => {
   return (
     <View style={{alignItems: 'flex-start'}}>
       <Touchable onPress={onPress} borderRadius={20} style={styles.goBack}>
-        <Icon style={styles.goBackTxt} name="arrow-left" />
+        <Icon style={[styles.goBackTxt, {color}]} name="arrow-left" />
       </Touchable>
     </View>
   );

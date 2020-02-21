@@ -9,20 +9,27 @@ import {
 } from 'react-native';
 import {Colors} from '../utils/values';
 import Touchable from './Touchable';
+import Loader from './Loader';
 
 const Button: React.FC<{
   onPress: () => void;
   light?: boolean;
   text: string;
-}> = ({onPress, light, text}) => {
+  loading?: boolean;
+}> = ({onPress, light, text, loading = false}) => {
   return (
     <Touchable
-      onPress={onPress}
+      containerStyle={{elevation: 20}}
+      onPress={!loading ? onPress : () => {}}
       borderRadius={20}
       style={[styles.button, light && {backgroundColor: Colors.white}]}>
-      <Text style={[styles.buttonText, light && {color: Colors.primary}]}>
-        {text}
-      </Text>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Text style={[styles.buttonText, light && {color: Colors.primary}]}>
+          {text}
+        </Text>
+      )}
     </Touchable>
   );
 };
@@ -32,6 +39,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.primary,
     padding: 8,
+    minHeight: 40,
   },
   buttonText: {
     color: Colors.white,

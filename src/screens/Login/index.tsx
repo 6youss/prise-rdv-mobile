@@ -14,21 +14,27 @@ const Login: React.FC = () => {
 
   const doctor = true;
 
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [username, setUsername] = React.useState<string>(
-    doctor ? 'phil' : 'admina',
+    __DEV__ ? (doctor ? 'phil' : 'admina') : '',
   );
   const [password, setPassword] = React.useState<string>(
-    doctor ? 'mcgraw' : 'admin',
+    __DEV__ ? (doctor ? 'mcgraw' : 'admin') : '',
   );
 
   function login() {
+    setLoading(true);
     postLogin(username, password) //doctor
-      .then(user => {
-        dispatch(signInAction(user));
-      })
-      .catch(error => {
-        Alert.alert('Oops!', error.message);
-      });
+      .then(
+        user => {
+          dispatch(signInAction(user));
+          // setLoading(false);
+        },
+        error => {
+          Alert.alert('Oops!', error.message);
+          setLoading(false);
+        },
+      );
   }
 
   return (
@@ -56,7 +62,7 @@ const Login: React.FC = () => {
             placeholder="Mot de passe"
             secureTextEntry
           />
-          <Button onPress={login} text="Login" light />
+          <Button onPress={login} text="Login" light loading={loading} />
         </View>
       </View>
     </ScreenContainer>

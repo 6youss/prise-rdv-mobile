@@ -9,7 +9,7 @@ import {
   tokenSelector,
   sessionsSelector,
 } from '../../redux/selectors';
-import {ScreenContainer} from '../../components';
+import {ScreenContainer, Avatar, Touchable} from '../../components';
 import SessionPicker, {
   onDayPressFunction,
 } from '../../components/SessionPicker';
@@ -66,7 +66,17 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
     <ScreenContainer
       status={{backgroundColor: Colors.white, barStyle: 'dark-content'}}
       safeArea={{style: {backgroundColor: Colors.white}}}>
-      <Text style={styles.calendarTitle}>Votre calendrier de visites</Text>
+      <View style={styles.header}>
+        <Text style={styles.calendarTitle}>Votre calendrier de visites</Text>
+        <Touchable
+          borderRadius={30}
+          onPress={() => {
+            navigation.navigate('DoctorProfile');
+          }}
+          style={{justifyContent: 'center', alignItems: 'center'}}>
+          <Avatar radius={35} style={{margin: 5}} />
+        </Touchable>
+      </View>
       <View style={styles.sessionPickerContainer}>
         <SessionPicker
           currentDate={currentDay}
