@@ -85,6 +85,7 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
           onDayPress={handleDayPress}
           onArrowLeftPress={handleLeftPress}
           onArrowRightPress={handleRightPress}
+          onRefresh={fetchSessions}
         />
       </View>
     </ScreenContainer>

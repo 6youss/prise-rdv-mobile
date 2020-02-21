@@ -12,7 +12,7 @@ import {Colors} from '../../utils/values';
 const Login: React.FC = () => {
   const dispatch = useDispatch();
 
-  const doctor = true;
+  const doctor = false;
 
   const [loading, setLoading] = React.useState<boolean>(false);
   const [username, setUsername] = React.useState<string>(
@@ -24,17 +24,15 @@ const Login: React.FC = () => {
 
   function login() {
     setLoading(true);
-    postLogin(username, password) //doctor
-      .then(
-        user => {
-          dispatch(signInAction(user));
-          // setLoading(false);
-        },
-        error => {
-          Alert.alert('Oops!', error.message);
-          setLoading(false);
-        },
-      );
+    postLogin(username, password).then(
+      user => {
+        dispatch(signInAction(user));
+      },
+      error => {
+        Alert.alert('Oops!', error.message);
+        setLoading(false);
+      },
+    );
   }
 
   return (

@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text, Alert} from 'react-native';
+import {Text, Alert, View} from 'react-native';
 
 import {ScreenContainer} from '../../components';
 
 import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList, IDoctor} from '../../types';
+import {RootStackParamList} from '../../types';
 import styles from './styles';
 import SessionPicker from '../../components/SessionPicker';
 import {ZTime} from '../../utils/ztime';
@@ -18,6 +18,7 @@ import {
 import {postSession, getDoctorSessions} from '../../api/sessions';
 import {getDateFromString, addDays} from '../../utils/date';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
+import {Colors} from '../../utils/values';
 
 type DoctorSessionsScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -86,19 +87,32 @@ const ReserveSession: React.FC<Props> = () => {
   }
 
   return (
-    <ScreenContainer>
+    <ScreenContainer
+      status={{backgroundColor: Colors.white, barStyle: 'dark-content'}}
+      safeArea={{style: {backgroundColor: Colors.white}}}>
       <Text style={styles.headerText}>
-        {`Pr. ${doctor.firstName} ${doctor.lastName}`}
+        {`Visite chez  Pr. ${doctor.firstName} ${doctor.lastName}`}
       </Text>
-
-      <SessionPicker
-        currentDate={currentDay}
-        onDayPress={handleDayPress}
-        dayCount={3}
-        sessions={sessions}
-        onArrowLeftPress={handleLeftPress}
-        onArrowRightPress={handleRightPress}
-      />
+      <View
+        style={{
+          elevation: 20,
+          borderRadius: 20,
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+          marginHorizontal: 15,
+          overflow: 'hidden',
+          flex: 1,
+        }}>
+        <SessionPicker
+          currentDate={currentDay}
+          onDayPress={handleDayPress}
+          dayCount={3}
+          sessions={sessions}
+          onArrowLeftPress={handleLeftPress}
+          onArrowRightPress={handleRightPress}
+          onRefresh={fetchSessions}
+        />
+      </View>
     </ScreenContainer>
   );
 };
