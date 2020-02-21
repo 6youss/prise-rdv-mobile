@@ -15,6 +15,7 @@ import {setDoctorAction} from '../../redux/actions/doctorActions';
 
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList, IDoctor} from '../../types';
+import FoundDoctor from './FoundDoctor';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -29,7 +30,7 @@ const FindDoctor: React.FC<Props> = ({navigation}) => {
   const patient = useSelector(patientSelector);
 
   const [searchValue, setSearchValue] = React.useState<string>(
-    __DEV__ ? '0758081532' : '',
+    __DEV__ ? '0781630358' : '',
   );
   const [loading, setLoading] = React.useState<boolean>(false);
   const [foundDoctor, setFoundDoctor] = React.useState<IDoctor | undefined>(
@@ -81,7 +82,7 @@ const FindDoctor: React.FC<Props> = ({navigation}) => {
         {loading ? (
           <Loader />
         ) : foundDoctor ? (
-          <DoctorItem
+          <FoundDoctor
             {...foundDoctor}
             onPress={() => {
               navigation.navigate('DoctorSessions');

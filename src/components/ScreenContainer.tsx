@@ -15,7 +15,7 @@ const ScreenContainer: React.FC<ScreenContainerProps> = ({
   return (
     <>
       <StatusBar
-        backgroundColor={Colors.primaryDark}
+        backgroundColor={Colors.primary}
         barStyle="light-content"
         {...status}
       />

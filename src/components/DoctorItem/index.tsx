@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, Text, Alert} from 'react-native';
+import {View, Text} from 'react-native';
 import styles from './styles';
 
 import Avatar from '../Avatar';
 import {Colors} from '../../utils/values';
 import Touchable from '../Touchable';
+import {IDoctor} from '../../types';
 
 const DoctorItem: React.FC<IDoctor & {onPress: () => void}> = ({
   firstName,

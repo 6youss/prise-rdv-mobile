@@ -12,14 +12,12 @@ import {Colors} from '../../utils/values';
 const Login: React.FC = () => {
   const dispatch = useDispatch();
 
-  const doctor = true;
-
   const [loading, setLoading] = React.useState<boolean>(false);
   const [username, setUsername] = React.useState<string>(
-    __DEV__ ? (doctor ? 'phil' : 'admina') : '',
+    __DEV__ ? (false ? 'doctor' : 'patient') : '',
   );
   const [password, setPassword] = React.useState<string>(
-    __DEV__ ? (doctor ? 'mcgraw' : 'admin') : '',
+    __DEV__ ? '123456' : '',
   );
 
   function login() {

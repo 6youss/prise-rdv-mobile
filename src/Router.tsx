@@ -14,6 +14,7 @@ import {
   DoctorCalendar,
   DoctorProfile,
   SessionDetail,
+  PatientProfile,
 } from './screens';
 
 import {getUser} from './api/user';
@@ -26,6 +27,7 @@ export type RootStackParamList = {
   Splash: undefined;
   Login: undefined;
   FindDoctor: undefined;
+  PatientProfile: undefined;
   DoctorSessions: undefined;
   DoctorCalendar: undefined;
   DoctorProfile: undefined;
@@ -83,6 +85,7 @@ export default function Router() {
         <>
           <Stack.Screen name="FindDoctor" component={FindDoctor} />
           <Stack.Screen name="DoctorSessions" component={ReserveSession} />
+          <Stack.Screen name="PatientProfile" component={PatientProfile} />
         </>
       ) : (
         <>

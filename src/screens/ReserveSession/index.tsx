@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, Alert, View} from 'react-native';
 
-import {ScreenContainer} from '../../components';
+import {ScreenContainer, Touchable, Avatar} from '../../components';
 
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../types';
@@ -19,6 +19,7 @@ import {postSession, getDoctorSessions} from '../../api/sessions';
 import {getDateFromString, addDays} from '../../utils/date';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 import {Colors} from '../../utils/values';
+import GoBack from '../../components/GoBack';
 
 type DoctorSessionsScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -29,7 +30,7 @@ type Props = {
   navigation: DoctorSessionsScreenNavigationProp;
 };
 
-const ReserveSession: React.FC<Props> = () => {
+const ReserveSession: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch();
   const patient = useSelector(patientSelector);
   const doctor = useSelector(doctorSelector);
@@ -90,19 +91,27 @@ const ReserveSession: React.FC<Props> = () => {
     <ScreenContainer
       status={{backgroundColor: Colors.white, barStyle: 'dark-content'}}
       safeArea={{style: {backgroundColor: Colors.white}}}>
-      <Text style={styles.headerText}>
-        {`Visite chez  Pr. ${doctor.firstName} ${doctor.lastName}`}
-      </Text>
-      <View
-        style={{
-          elevation: 20,
-          borderRadius: 20,
-          borderBottomLeftRadius: 0,
-          borderBottomRightRadius: 0,
-          marginHorizontal: 15,
-          overflow: 'hidden',
-          flex: 1,
-        }}>
+      <View style={{marginHorizontal: 20, marginTop: 15, marginBottom: 15}}>
+        <GoBack
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Text style={styles.headerText}>
+            <Text style={{fontWeight: '100'}}>{`Visite chez `}</Text>
+            {`Pr. ${doctor.firstName} ${doctor.lastName}`}
+          </Text>
+          <Touchable
+            borderRadius={30}
+            onPress={() => {
+              navigation.navigate('PatientProfile');
+            }}
+            style={{justifyContent: 'center', alignItems: 'center'}}>
+            <Avatar radius={35} style={{margin: 5}} />
+          </Touchable>
+        </GoBack>
+      </View>
+
+      <View style={styles.pickerContainer}>
         <SessionPicker
           currentDate={currentDay}
           onDayPress={handleDayPress}
