@@ -77,12 +77,22 @@ const SessionDetail: React.FC<Props> = ({navigation, route}) => {
           </View>
           <Text style={styles.seeMore}>{'Fiche patient'}</Text>
         </View>
+
+        <View style={styles.cardContainer}>
+          <Text style={styles.cardTexts}>"Rédiger les sympthomes"</Text>
+        </View>
+        <View style={styles.cardContainer}>
+          <Text style={styles.cardTexts}>
+            "Rédiger les médicaments données "
+          </Text>
+        </View>
+
         <View style={styles.pushToBottom}>
           <Touchable
             containerStyle={{marginBottom: 20}}
             borderRadius={20}
             style={styles.button}>
-            <Text style={styles.buttonText}>Do something</Text>
+            <Text style={styles.buttonText}>Clôturer la session</Text>
           </Touchable>
         </View>
       </View>

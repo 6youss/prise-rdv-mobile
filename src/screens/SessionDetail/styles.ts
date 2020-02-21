@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 20,
     paddingBottom: 40,
+    marginVertical: 10,
   },
   cardTexts: {
     color: Colors.darkGray,
