@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.primaryDark,
+    backgroundColor: Colors.primary,
   },
   logo: {
     position: 'absolute',

@@ -6,14 +6,25 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
+import {Colors} from '../utils/values';
 
 const Touchable: React.FC<TouchableNativeFeedbackProps & {
   borderRadius?: number;
   containerStyle?: StyleProp<ViewStyle>;
-}> = ({children, style, containerStyle, borderRadius = 5, ...props}) => {
+  rippleColor?: string;
+}> = ({
+  children,
+  style,
+  containerStyle,
+  borderRadius = 5,
+  rippleColor = Colors.primaryLight,
+  ...props
+}) => {
   return (
     <View style={[{overflow: 'hidden', borderRadius}, containerStyle]}>
-      <TouchableNativeFeedback {...props}>
+      <TouchableNativeFeedback
+        {...props}
+        background={TouchableNativeFeedback.Ripple(rippleColor)}>
         <View style={style}>{children}</View>
       </TouchableNativeFeedback>
     </View>
