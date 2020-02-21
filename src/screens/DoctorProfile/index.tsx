@@ -20,6 +20,7 @@ import {addDays} from '../../utils/date';
 import GoBack from '../../components/GoBack';
 import {screenWidth, screenHeight} from '../../utils/dimentions';
 import Button from '../../components/Button';
+import {signOutAction} from '../../redux/actions/userActions';
 
 type DoctorProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -67,7 +68,12 @@ const DoctorProfile: React.FC<Props> = ({navigation}) => {
           <Text>{`${doctor.address}`}</Text>
         </View>
         <View style={{flex: 1, justifyContent: 'flex-end', padding: 20}}>
-          <Button text="Se déconnecter" onPress={() => {}} />
+          <Button
+            text="Se déconnecter"
+            onPress={() => {
+              dispatch(signOutAction());
+            }}
+          />
         </View>
       </View>
     </ScreenContainer>

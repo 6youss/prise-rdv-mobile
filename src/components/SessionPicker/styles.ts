@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const dcstyle = StyleSheet.create({
+export const dayColStyles = StyleSheet.create({
   container: {
     width: '20%',
     alignItems: 'center',
@@ -41,6 +41,26 @@ export const dcstyle = StyleSheet.create({
     color: Colors.primary,
     fontSize: 20,
     fontWeight: 'bold',
+  },
+});
+
+export const arrowStyles = StyleSheet.create({
+  container: {
+    width: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  touchContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '90%',
+    aspectRatio: 1,
+  },
+  touch: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 export default styles;

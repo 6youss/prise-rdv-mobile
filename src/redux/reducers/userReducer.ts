@@ -6,6 +6,7 @@ const initState: IUser = {
   username: 'patient',
   userType: 'patient',
   accessToken: undefined,
+  refreshToken: undefined,
 };
 
 function reducer(prevState: IUser = initState, action: UserAction): IUser {
@@ -16,10 +17,7 @@ function reducer(prevState: IUser = initState, action: UserAction): IUser {
         ...action.payload,
       };
     case 'SIGN_OUT':
-      return {
-        ...prevState,
-        accessToken: undefined,
-      };
+      return initState;
     default:
       return prevState;
   }

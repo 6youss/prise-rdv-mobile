@@ -13,3 +13,9 @@ export function signInAction(payload: any): UserAction {
     payload,
   };
 }
+export function signOutAction(): UserAction {
+  return {
+    type: UserActionTypes.SIGN_OUT,
+    payload: undefined,
+  };
+}

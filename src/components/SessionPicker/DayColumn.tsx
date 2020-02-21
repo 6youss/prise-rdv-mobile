@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import {ZHours, onDayPressFunction} from '.';
-import {dcstyle} from './styles';
+import {dayColStyles} from './styles';
 import Touchable from '../Touchable';
 
 const DayColumn: React.FC<{
@@ -11,7 +11,7 @@ const DayColumn: React.FC<{
   onDayPress?: onDayPressFunction;
 }> = ({day, availableHours, width, onDayPress = () => {}}) => {
   return (
-    <View style={[dcstyle.container, {width: `${width}%`}]}>
+    <View style={[dayColStyles.container, {width: `${width}%`}]}>
       {availableHours.map((hour, index) => (
         <Touchable
           onPress={() => {
@@ -19,9 +19,9 @@ const DayColumn: React.FC<{
           }}
           key={'hour-' + index}
           containerStyle={{width: '90%', height: 70, marginVertical: 5}}
-          style={dcstyle.hour}
+          style={dayColStyles.hour}
           borderRadius={5}>
-          <Text style={dcstyle.hourText}>{hour.toString()}</Text>
+          <Text style={dayColStyles.hourText}>{hour.toString()}</Text>
         </Touchable>
       ))}
     </View>

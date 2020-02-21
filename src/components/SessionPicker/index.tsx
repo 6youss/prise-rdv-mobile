@@ -1,10 +1,8 @@
 import React from 'react';
 import {View, Text, ScrollView, RefreshControl} from 'react-native';
 import {ZTime} from '../../utils/ztime';
-import styles, {dcstyle} from './styles';
+import styles, {dayColStyles} from './styles';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-import Touchable from '../Touchable';
 import DayColumn from './DayColumn';
 import {Colors} from '../../utils/values';
 import {
@@ -14,6 +12,7 @@ import {
   getStringFromDate,
   dateRange,
 } from '../../utils/date';
+import Arrow from './Arrow';
 
 export type Hours = Array<{id: string; time: string} | string>;
 
@@ -74,23 +73,6 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
 
   const dayColumnWidth = 80 / dayCount;
 
-  const Arrow: React.FC<{left?: boolean}> = ({left}) => {
-    return (
-      <Touchable
-        borderRadius={40}
-        onPress={() => {
-          left ? onArrowLeftPress(currentDate) : onArrowRightPress(currentDate);
-        }}
-        containerStyle={{width: '10%'}}
-        style={{alignItems: 'center', padding: 10}}>
-        <Icon
-          style={{fontSize: 20, color: Colors.darkGray}}
-          name={left ? 'arrow-left' : 'arrow-right'}
-        />
-      </Touchable>
-    );
-  };
-
   const PickerHeader: React.FC = () => {
     return (
       <View
@@ -100,7 +82,12 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           alignItems: 'center',
           backgroundColor: Colors.white,
         }}>
-        <Arrow left />
+        <Arrow
+          onPress={() => {
+            onArrowLeftPress(currentDate);
+          }}
+          left
+        />
         {Object.keys(__sessions).map(sessionDate => {
           const date = getDateFromString(sessionDate);
           return (
@@ -109,14 +96,19 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
               style={{
                 width: `${dayColumnWidth}%`,
               }}>
-              <Text style={dcstyle.day}>{getDayName(date)}</Text>
-              <Text style={dcstyle.month}>{`${date.getDate()} ${getMonthName(
+              <Text style={dayColStyles.day}>{getDayName(date)}</Text>
+              <Text
+                style={dayColStyles.month}>{`${date.getDate()} ${getMonthName(
                 date,
               )}`}</Text>
             </View>
           );
         })}
-        <Arrow />
+        <Arrow
+          onPress={() => {
+            onArrowRightPress(currentDate);
+          }}
+        />
       </View>
     );
   };
