@@ -1,27 +1,15 @@
 import React from 'react';
 import {View, Text, Alert} from 'react-native';
-import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../Router';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  doctorSelector,
-  tokenSelector,
-  sessionsSelector,
-  patientSelector,
-} from '../../redux/selectors';
-import {ScreenContainer, Avatar, Touchable} from '../../components';
-import SessionPicker, {
-  onDayPressFunction,
-} from '../../components/SessionPicker';
-import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
-import {getDoctorSessions} from '../../api/sessions';
+import {tokenSelector, patientSelector} from '../../redux/selectors';
+import {ScreenContainer, Avatar} from '../../components';
 import {Colors} from '../../utils/values';
-import {addDays} from '../../utils/date';
 import GoBack from '../../components/GoBack';
-import {screenWidth, screenHeight} from '../../utils/dimentions';
 import Button from '../../components/Button';
 import {signOutAction} from '../../redux/actions/userActions';
+import styles from './styles';
 
 type PatientProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,

@@ -1,4 +1,4 @@
-package com.priserdvmobile;
+package com.zsoft.mobile.zdoctor;
 
 import com.facebook.react.ReactActivity;
 //https://reactnavigation.org/docs/en/getting-started.html

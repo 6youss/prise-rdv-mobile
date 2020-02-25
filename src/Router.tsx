@@ -22,6 +22,7 @@ import {setPatientAction} from './redux/actions/patientActions';
 
 import {tokenSelector, userTypeSelector} from './redux/selectors';
 import {setDoctorAction} from './redux/actions/doctorActions';
+import NotificationHandler from './components/NotificationHandler';
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -76,24 +77,27 @@ export default function Router() {
   }, [accessToken, dispatch]);
 
   return (
-    <Stack.Navigator screenOptions={defaultOptions}>
-      {isLoading ? (
-        <Stack.Screen name="Splash" component={Splash} />
-      ) : needAuth ? (
-        <Stack.Screen name="Login" component={Login} />
-      ) : userType === 'patient' ? (
-        <>
-          <Stack.Screen name="FindDoctor" component={FindDoctor} />
-          <Stack.Screen name="DoctorSessions" component={ReserveSession} />
-          <Stack.Screen name="PatientProfile" component={PatientProfile} />
-        </>
-      ) : (
-        <>
-          <Stack.Screen name="DoctorCalendar" component={DoctorCalendar} />
-          <Stack.Screen name="DoctorProfile" component={DoctorProfile} />
-          <Stack.Screen name="SessionDetail" component={SessionDetail} />
-        </>
-      )}
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator screenOptions={defaultOptions}>
+        {isLoading ? (
+          <Stack.Screen name="Splash" component={Splash} />
+        ) : needAuth ? (
+          <Stack.Screen name="Login" component={Login} />
+        ) : userType === 'patient' ? (
+          <>
+            <Stack.Screen name="FindDoctor" component={FindDoctor} />
+            <Stack.Screen name="DoctorSessions" component={ReserveSession} />
+            <Stack.Screen name="PatientProfile" component={PatientProfile} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="DoctorCalendar" component={DoctorCalendar} />
+            <Stack.Screen name="DoctorProfile" component={DoctorProfile} />
+            <Stack.Screen name="SessionDetail" component={SessionDetail} />
+          </>
+        )}
+      </Stack.Navigator>
+      {!needAuth && <NotificationHandler />}
+    </>
   );
 }

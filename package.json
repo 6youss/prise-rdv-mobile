@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "android-release": "react-native run-android --variant=release",
+    "android-rel": "react-native run-android --variant=release",
+    "signing-report": "cd android && gradlew signingReport && cd..",
+    "clean": "cd android && gradlew clean && cd..",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
@@ -14,6 +16,8 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.6",
+    "@react-native-firebase/app": "^6.3.4",
+    "@react-native-firebase/messaging": "^6.3.4",
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
     "react": "16.9.0",

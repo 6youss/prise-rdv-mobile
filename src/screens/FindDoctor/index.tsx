@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, Image, Alert} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {ScreenContainer, Input} from '../../components';
+import {ScreenContainer, Input, Touchable} from '../../components';
 import styles from './styles';
 import {fetchDoctorByPhone} from '../../api/doctor';
 import Avatar from '../../components/Avatar';
@@ -63,7 +63,12 @@ const FindDoctor: React.FC<Props> = ({navigation}) => {
     <ScreenContainer>
       <View style={styles.container}>
         <View style={styles.searchContainer}>
-          <Avatar radius={70} />
+          <Touchable
+            onPress={() => {
+              navigation.navigate('PatientProfile');
+            }}>
+            <Avatar radius={70} />
+          </Touchable>
           <Text style={styles.profileName}>
             {patient.firstName} {patient.lastName}
           </Text>

@@ -30,3 +30,23 @@ export async function getUser(accessToken: string): Promise<IUserProfile> {
   }
   throw new Error(await res.text());
 }
+
+export async function postDevice(
+  accessToken: string | undefined,
+  fcmToken: string,
+  platform: string,
+): Promise<any> {
+  const res = await fetch(`${BASE_URL}/devices/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({fcmToken, platform}),
+  });
+  if (res.ok) {
+    return await res.json();
+  }
+
+  throw new Error(await res.text());
+}
