@@ -7,7 +7,7 @@ export async function postSession(
   doctorId: string,
   date: Date,
 ): Promise<ISession> {
-  console.log('posted session', date.toISOString());
+  // console.log('posted session', date.toISOString());
 
   const res = await fetch(`${BASE_URL}/sessions/`, {
     method: 'POST',
