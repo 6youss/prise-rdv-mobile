@@ -1,18 +1,18 @@
 import React from 'react';
 import {
-  View,
-  TouchableNativeFeedback,
+  View,  
   TouchableNativeFeedbackProps,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Colors} from '../../utils/values';
 import styles from './styles';
+import { Touchable } from '..';
 
 const FloatingButton: React.FC<TouchableNativeFeedbackProps> = ({...props}) => {
   const {disabled} = props;
   return (
     <View style={styles.searchButtonContainer}>
-      <TouchableNativeFeedback {...props}>
+      <Touchable {...props}>
         <View
           style={[
             styles.searchButton,
@@ -25,7 +25,7 @@ const FloatingButton: React.FC<TouchableNativeFeedbackProps> = ({...props}) => {
             color={disabled ? Colors.gray : Colors.primaryDark}
           />
         </View>
-      </TouchableNativeFeedback>
+      </Touchable>
     </View>
   );
 };

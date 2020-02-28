@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>619214643343-984d0uo7u4lifn4nn7eriorcjvn9hoas.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.619214643343-984d0uo7u4lifn4nn7eriorcjvn9hoas</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>619214643343-ehtapunicrorfoa7nk9r5uddabpnijh8.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDGTRTX8VP91vQOxQSIaHDZv9qBJM0Gp4Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>619214643343</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.zsoftconsulting.mobile.zdoctor</string>
+	<key>PROJECT_ID</key>
+	<string>zdoctor-e9625</string>
+	<key>STORAGE_BUCKET</key>
+	<string>zdoctor-e9625.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:619214643343:ios:41f527668998383da090fa</string>
+	<key>DATABASE_URL</key>
+	<string>https://zdoctor-e9625.firebaseio.com</string>
+</dict>
+</plist>
