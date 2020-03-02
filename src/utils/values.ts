@@ -33,6 +33,7 @@ export const smallShadow = {
   elevation: 2,
 };
 
-export const BASE_URL = !__DEV__
-  ? 'http://192.168.12.112:8000/api'
-  : 'https://zedoctolib.herokuapp.com/api/';
+export const BASE_URL = __DEV__
+  ? 'https://zedoctolib.herokuapp.com/api/'
+  : // ? 'http://192.168.12.112:8000/api'
+    'https://zedoctolib.herokuapp.com/api/';
