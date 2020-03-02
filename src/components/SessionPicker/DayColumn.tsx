@@ -14,13 +14,14 @@ const DayColumn: React.FC<{
     <View style={[dayColStyles.container, {width: `${width}%`}]}>
       {availableHours.map((hour, index) => (
         <Touchable
+          shadow
           onPress={() => {
             onDayPress(day, hour);
           }}
           key={'hour-' + index}
           containerStyle={{width: '90%', height: 70, marginVertical: 5}}
           style={dayColStyles.hour}
-          borderRadius={5}>
+          borderRadius={8}>
           <Text style={dayColStyles.hourText}>{hour.toString()}</Text>
         </Touchable>
       ))}

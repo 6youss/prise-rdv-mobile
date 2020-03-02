@@ -18,7 +18,7 @@ import {
 import {postSession, getDoctorSessions} from '../../api/sessions';
 import {getDateFromString, addDays} from '../../utils/date';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
-import {Colors} from '../../utils/values';
+import {Colors, bigShadow} from '../../utils/values';
 import GoBack from '../../components/GoBack';
 
 type DoctorSessionsScreenNavigationProp = StackNavigationProp<
@@ -101,6 +101,7 @@ const ReserveSession: React.FC<Props> = ({navigation}) => {
             {`Pr. ${doctor.firstName} ${doctor.lastName}`}
           </Text>
           <Touchable
+            shadow
             borderRadius={30}
             onPress={() => {
               navigation.navigate('PatientProfile');
@@ -110,17 +111,23 @@ const ReserveSession: React.FC<Props> = ({navigation}) => {
           </Touchable>
         </GoBack>
       </View>
-
-      <View style={styles.pickerContainer}>
-        <SessionPicker
-          currentDate={currentDay}
-          onDayPress={handleDayPress}
-          dayCount={3}
-          sessions={sessions}
-          onArrowLeftPress={handleLeftPress}
-          onArrowRightPress={handleRightPress}
-          onRefresh={fetchSessions}
-        />
+      <View
+        style={{
+          flexGrow: 1,
+          marginHorizontal: 20,
+          ...bigShadow,
+        }}>
+        <View style={styles.pickerContainer}>
+          <SessionPicker
+            currentDate={currentDay}
+            onDayPress={handleDayPress}
+            dayCount={3}
+            sessions={sessions}
+            onArrowLeftPress={handleLeftPress}
+            onArrowRightPress={handleRightPress}
+            onRefresh={fetchSessions}
+          />
+        </View>
       </View>
     </ScreenContainer>
   );

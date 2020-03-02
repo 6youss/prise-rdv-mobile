@@ -16,7 +16,11 @@ const GoBack: React.FC<{color?: string; onPress: () => void}> = ({
         alignItems: 'center',
         justifyContent: 'space-between',
       }}>
-      <Touchable onPress={onPress} borderRadius={20} style={styles.goBack}>
+      <Touchable
+        shadow
+        onPress={onPress}
+        borderRadius={20}
+        style={styles.goBack}>
         <Icon style={[styles.goBackTxt, {color}]} name="arrow-left" />
       </Touchable>
       {children}

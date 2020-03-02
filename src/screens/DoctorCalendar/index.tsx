@@ -15,7 +15,7 @@ import SessionPicker, {
 } from '../../components/SessionPicker';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 import {getDoctorSessions} from '../../api/sessions';
-import {Colors} from '../../utils/values';
+import {Colors, bigShadow} from '../../utils/values';
 import {addDays} from '../../utils/date';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
@@ -77,16 +77,24 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
           <Avatar radius={35} style={{margin: 5}} />
         </Touchable>
       </View>
-      <View style={styles.sessionPickerContainer}>
-        <SessionPicker
-          currentDate={currentDay}
-          reverseFilter
-          sessions={sessions}
-          onDayPress={handleDayPress}
-          onArrowLeftPress={handleLeftPress}
-          onArrowRightPress={handleRightPress}
-          onRefresh={fetchSessions}
-        />
+
+      <View
+        style={{
+          flexGrow: 1,
+          marginHorizontal: 20,
+          ...bigShadow,
+        }}>
+        <View style={styles.sessionPickerContainer}>
+          <SessionPicker
+            currentDate={currentDay}
+            reverseFilter
+            sessions={sessions}
+            onDayPress={handleDayPress}
+            onArrowLeftPress={handleLeftPress}
+            onArrowRightPress={handleRightPress}
+            onRefresh={fetchSessions}
+          />
+        </View>
       </View>
     </ScreenContainer>
   );

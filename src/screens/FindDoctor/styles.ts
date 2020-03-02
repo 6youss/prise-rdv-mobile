@@ -1,9 +1,12 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../utils/values';
+import {Colors, bigShadow} from '../../utils/values';
 import {screenHeight} from '../../utils/dimentions';
 
 const styles = StyleSheet.create({
-  container: {height: '100%', backgroundColor: Colors.white},
+  container: {
+    height: '100%',
+    backgroundColor: Colors.white,
+  },
   searchContainer: {
     backgroundColor: Colors.primary,
     paddingVertical: 20,
@@ -25,6 +28,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-end',
+    paddingBottom: 100,
   },
   doctorIllustration: {
     resizeMode: 'contain',
@@ -35,18 +39,20 @@ const styles = StyleSheet.create({
 
 export const foundStyles = StyleSheet.create({
   container: {
+    borderRadius: 20,
     padding: 40,
-    backgroundColor: Colors.white,
     alignItems: 'center',
+    backgroundColor: Colors.white,
+    margin: 30,
+    ...bigShadow,
   },
-
   descContainer: {
     padding: 20,
     alignItems: 'center',
   },
   descText: {
     fontSize: 20,
-    marginBottom: 5,
+    marginBottom: 20,
   },
 });
 export default styles;

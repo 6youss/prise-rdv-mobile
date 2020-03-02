@@ -9,14 +9,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightGray,
   },
   sessionPickerContainer: {
-    marginHorizontal: 20,
-    flex: 1,
+    flexGrow: 1,
     overflow: 'hidden',
     borderRadius: 20,
-    borderBottomRightRadius: 0,
-    borderBottomLeftRadius: 0,
-    backgroundColor: Colors.lightGray,
-    elevation: 50,
   },
   calendarTitle: {
     fontSize: 15,

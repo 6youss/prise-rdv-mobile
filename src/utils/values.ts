@@ -11,6 +11,28 @@ export const Colors = {
   black: '#000',
 };
 
+export const bigShadow = {
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 10,
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 13.16,
+  elevation: 50,
+};
+
+export const smallShadow = {
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.1,
+  shadowRadius: 2,
+  elevation: 5,
+};
+
 export const BASE_URL = !__DEV__
   ? 'http://192.168.12.112:8000/api'
   : 'https://zedoctolib.herokuapp.com/api/';

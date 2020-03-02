@@ -11,11 +11,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   pickerContainer: {
-    elevation: 20,
     borderRadius: 20,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    marginHorizontal: 15,
     overflow: 'hidden',
     flex: 1,
   },

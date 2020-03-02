@@ -8,45 +8,38 @@ import {
   ViewStyle,
   Platform,
 } from 'react-native';
-import { Colors } from '../utils/values';
-
+import {Colors, smallShadow} from '../utils/values';
 
 const Touchable: React.FC<TouchableNativeFeedbackProps & {
   borderRadius?: number;
   containerStyle?: StyleProp<ViewStyle>;
   rippleColor?: string;
+  shadow?: boolean;
 }> = ({
   children,
   style,
   containerStyle,
   borderRadius = 5,
   rippleColor = Colors.primaryLight,
+  shadow = false,
   ...props
 }) => {
-    return (
-      <View style={[{ overflow: 'hidden', borderRadius }, containerStyle]}>
-        {Platform.OS === "android" ?
+  return (
+    <View style={[shadow && smallShadow, containerStyle]}>
+      <View style={{overflow: 'hidden', borderRadius}}>
+        {Platform.OS === 'android' ? (
           <TouchableNativeFeedback
             {...props}
             background={TouchableNativeFeedback.Ripple(rippleColor)}>
             <View style={style}>{children}</View>
-          </TouchableNativeFeedback> :
-          <View style={containerStyle} >
-            <TouchableOpacity
-              {...props}
-
-              style={style}
-            >
-              <View>
-
-              {
-                children
-              }
-              </View>
-            </TouchableOpacity>
-          </View>
-        }
+          </TouchableNativeFeedback>
+        ) : (
+          <TouchableOpacity {...props} style={style}>
+            <View>{children}</View>
+          </TouchableOpacity>
+        )}
       </View>
-    );
-  };
+    </View>
+  );
+};
 export default Touchable;

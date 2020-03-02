@@ -1,14 +1,14 @@
 import React from 'react';
-import {View, Text, Alert, Image, Button} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../../Router';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {tokenSelector} from '../../redux/selectors';
-import {ScreenContainer, Avatar, Touchable} from '../../components';
+import {ScreenContainer, Avatar, Touchable, Button} from '../../components';
 import {getSessionDetails} from '../../api/sessions';
-import Icon from 'react-native-vector-icons/FontAwesome';
+
 import {ISessionDetails} from '../../types';
 import {getStringFromDate} from '../../utils/date';
 import defaultProfile from '../../assets/defaultProfile.jpg';
@@ -57,7 +57,8 @@ const SessionDetail: React.FC<Props> = ({navigation, route}) => {
 
   return (
     <ScreenContainer
-      status={{backgroundColor: Colors.lightGray, barStyle: 'dark-content'}}>
+      status={{backgroundColor: Colors.lightGray, barStyle: 'dark-content'}}
+      safeArea={{style: {backgroundColor: Colors.lightGray}}}>
       <View style={styles.container}>
         <GoBack
           onPress={() => {
@@ -88,12 +89,7 @@ const SessionDetail: React.FC<Props> = ({navigation, route}) => {
         </View>
 
         <View style={styles.pushToBottom}>
-          <Touchable
-            containerStyle={{marginBottom: 20}}
-            borderRadius={20}
-            style={styles.button}>
-            <Text style={styles.buttonText}>Clôturer la session</Text>
-          </Touchable>
+          <Button text="Clôturer la session" onPress={() => {}} />
         </View>
       </View>
     </ScreenContainer>

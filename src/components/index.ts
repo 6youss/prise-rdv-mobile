@@ -5,3 +5,4 @@ export {default as Loader} from './Loader';
 export {default as Touchable} from './Touchable';
 export {default as FloatingButton} from './FloatingButton';
 export {default as DoctorItem} from './DoctorItem';
+export {default as Button} from './Button';

@@ -1,12 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {Colors} from '../../utils/values';
+import {Colors, bigShadow} from '../../utils/values';
 
 const styles = StyleSheet.create({
   searchButtonContainer: {
-    elevation: 20,
-    overflow: 'hidden',
     borderRadius: 80,
     margin: 30,
+    ...bigShadow,
   },
   searchButton: {
     width: 80,

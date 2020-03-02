@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Image, ImageStyle} from 'react-native';
+import {StyleSheet, Image, ImageStyle, View} from 'react-native';
 import defaultProfile from '../assets/defaultProfile.jpg';
 
 const Avatar: React.FC<{
@@ -10,16 +10,8 @@ const Avatar: React.FC<{
   return (
     <Image
       source={source}
-      style={[
-        styles.avatar,
-        {width: radius, height: radius, borderRadius: radius},
-        style,
-      ]}
+      style={[{width: radius, height: radius, borderRadius: radius}, style]}
     />
   );
 };
 export default Avatar;
-
-const styles = StyleSheet.create({
-  avatar: {},
-});

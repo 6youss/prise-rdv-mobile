@@ -5,7 +5,7 @@ import {RootStackParamList} from '../../Router';
 import {useSelector, useDispatch} from 'react-redux';
 import {tokenSelector, patientSelector} from '../../redux/selectors';
 import {ScreenContainer, Avatar} from '../../components';
-import {Colors} from '../../utils/values';
+import {Colors, bigShadow} from '../../utils/values';
 import GoBack from '../../components/GoBack';
 import Button from '../../components/Button';
 import {signOutAction} from '../../redux/actions/userActions';
@@ -22,7 +22,6 @@ type Props = {
 const PatientProfile: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch();
   const patient = useSelector(patientSelector);
-  const accessToken = useSelector(tokenSelector);
 
   return (
     <ScreenContainer
@@ -44,9 +43,8 @@ const PatientProfile: React.FC<Props> = ({navigation}) => {
           padding: 20,
           paddingBottom: 50,
           position: 'relative',
-          marginBottom: -30,
           marginHorizontal: 20,
-          elevation: 40,
+          ...bigShadow,
         }}>
         <View style={{alignItems: 'center'}}>
           <Avatar style={{margin: 20}} />

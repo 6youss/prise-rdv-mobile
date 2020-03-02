@@ -1,13 +1,6 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TouchableNativeFeedbackProps,
-  StyleProp,
-  ViewStyle,
-  Text,
-  View,
-} from 'react-native';
-import {Colors} from '../utils/values';
+import {StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {Colors, smallShadow} from '../utils/values';
 import Touchable from './Touchable';
 import Loader from './Loader';
 
@@ -16,27 +9,35 @@ const Button: React.FC<{
   light?: boolean;
   text: string;
   loading?: boolean;
-}> = ({onPress, light, text, loading = false}) => {
+  style?: ViewStyle;
+}> = ({onPress, light, text, loading = false, style}) => {
   return (
-    <Touchable
-      containerStyle={{elevation: 20}}
-      onPress={!loading ? onPress : () => {}}
-      borderRadius={20}
-      style={[styles.button, light && {backgroundColor: Colors.white}]}>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Text style={[styles.buttonText, light && {color: Colors.primary}]}>
-          {text}
-        </Text>
-      )}
-    </Touchable>
+    <View style={{...smallShadow}}>
+      <Touchable
+        shadow
+        onPress={!loading ? onPress : () => {}}
+        borderRadius={20}
+        style={[
+          styles.button,
+          light && {backgroundColor: Colors.white},
+          style,
+        ]}>
+        {loading ? (
+          <Loader />
+        ) : (
+          <Text style={[styles.buttonText, light && {color: Colors.primary}]}>
+            {text}
+          </Text>
+        )}
+      </Touchable>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: Colors.primary,
     padding: 8,
     minHeight: 40,

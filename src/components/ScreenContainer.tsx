@@ -1,5 +1,5 @@
 import React from 'react';
-import {SafeAreaView, StatusBar, StatusBarProps, ViewProps} from 'react-native';
+import {SafeAreaView, StatusBar, StatusBarProps, ViewProps, View} from 'react-native';
 import {Colors} from '../utils/values';
 
 interface ScreenContainerProps {
@@ -21,9 +21,10 @@ const ScreenContainer: React.FC<ScreenContainerProps> = ({
       />
       <SafeAreaView
         {...safeArea}
-        style={[{backgroundColor: Colors.white, flex: 1}, safeArea?.style]}>
+        style={[{backgroundColor: Colors.primary, flex: 1}, safeArea?.style]}>
         {children}
       </SafeAreaView>
+    
     </>
   );
 };

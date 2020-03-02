@@ -55,7 +55,7 @@ const DoctorProfile: React.FC<Props> = ({navigation}) => {
           padding: 20,
           paddingBottom: 50,
           position: 'relative',
-          marginBottom: -30,
+
           marginHorizontal: 20,
           elevation: 40,
         }}>

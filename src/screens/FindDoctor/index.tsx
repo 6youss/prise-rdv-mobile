@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, Image, Alert} from 'react-native';
+import {Text, View, Image, Alert, Keyboard} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {ScreenContainer, Input, Touchable} from '../../components';
 import styles from './styles';
@@ -16,6 +16,7 @@ import {setDoctorAction} from '../../redux/actions/doctorActions';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList, IDoctor} from '../../types';
 import FoundDoctor from './FoundDoctor';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -60,10 +61,11 @@ const FindDoctor: React.FC<Props> = ({navigation}) => {
   }
 
   return (
-    <ScreenContainer>
+    <ScreenContainer safeArea={{style: {marginBottom: -100}}}>
       <View style={styles.container}>
         <View style={styles.searchContainer}>
           <Touchable
+            shadow
             onPress={() => {
               navigation.navigate('PatientProfile');
             }}>
@@ -85,7 +87,10 @@ const FindDoctor: React.FC<Props> = ({navigation}) => {
         </View>
 
         {loading ? (
-          <Loader />
+          <View
+            style={{flex: 2, justifyContent: 'center', alignItems: 'center'}}>
+            <Loader />
+          </View>
         ) : foundDoctor ? (
           <FoundDoctor
             {...foundDoctor}
@@ -95,18 +100,20 @@ const FindDoctor: React.FC<Props> = ({navigation}) => {
           />
         ) : (
           <>
-            <Image
-              style={styles.doctorIllustration}
-              source={doctorIllustration}
-            />
-            <Text
-              style={{
-                textAlign: 'center',
-                fontSize: 15,
-                color: Colors.darkGray,
-              }}>
-              Trouvez votre médecin
-            </Text>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <Image
+                style={styles.doctorIllustration}
+                source={doctorIllustration}
+              />
+              <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 15,
+                  color: Colors.darkGray,
+                }}>
+                Trouvez votre médecin
+              </Text>
+            </TouchableWithoutFeedback>
           </>
         )}
         <View style={styles.pushToBottomCenter}>
