@@ -15,6 +15,7 @@ const Touchable: React.FC<TouchableNativeFeedbackProps & {
   containerStyle?: StyleProp<ViewStyle>;
   rippleColor?: string;
   shadow?: boolean;
+  androidShadow?: number;
 }> = ({
   children,
   style,
@@ -22,11 +23,17 @@ const Touchable: React.FC<TouchableNativeFeedbackProps & {
   borderRadius = 5,
   rippleColor = Colors.primaryLight,
   shadow = false,
+  androidShadow,
   ...props
 }) => {
   return (
     <View style={[shadow && smallShadow, containerStyle]}>
-      <View style={{overflow: 'hidden', borderRadius}}>
+      <View
+        style={{
+          overflow: 'hidden',
+          borderRadius,
+          elevation: androidShadow,
+        }}>
         {Platform.OS === 'android' ? (
           <TouchableNativeFeedback
             {...props}

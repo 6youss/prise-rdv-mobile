@@ -84,7 +84,11 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
           marginHorizontal: 20,
           ...bigShadow,
         }}>
-        <View style={styles.sessionPickerContainer}>
+        <View
+          style={[
+            styles.sessionPickerContainer,
+            {elevation: bigShadow.elevation},
+          ]}>
           <SessionPicker
             currentDate={currentDay}
             reverseFilter

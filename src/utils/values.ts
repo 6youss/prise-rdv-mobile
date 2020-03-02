@@ -30,7 +30,7 @@ export const smallShadow = {
   },
   shadowOpacity: 0.1,
   shadowRadius: 2,
-  elevation: 5,
+  elevation: 2,
 };
 
 export const BASE_URL = !__DEV__

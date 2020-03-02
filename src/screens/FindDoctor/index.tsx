@@ -116,12 +116,14 @@ const FindDoctor: React.FC<Props> = ({navigation}) => {
             </TouchableWithoutFeedback>
           </>
         )}
-        <View style={styles.pushToBottomCenter}>
-          <FloatingButton
-            disabled={loading || !searchValue}
-            onPress={findDoctor}
-          />
-        </View>
+        {!foundDoctor && (
+          <View style={styles.pushToBottomCenter}>
+            <FloatingButton
+              disabled={loading || !searchValue}
+              onPress={findDoctor}
+            />
+          </View>
+        )}
       </View>
     </ScreenContainer>
   );

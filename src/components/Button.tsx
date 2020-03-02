@@ -14,6 +14,7 @@ const Button: React.FC<{
   return (
     <View style={{...smallShadow}}>
       <Touchable
+        androidShadow={4}
         shadow
         onPress={!loading ? onPress : () => {}}
         borderRadius={20}

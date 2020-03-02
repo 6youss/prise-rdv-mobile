@@ -14,6 +14,7 @@ const DayColumn: React.FC<{
     <View style={[dayColStyles.container, {width: `${width}%`}]}>
       {availableHours.map((hour, index) => (
         <Touchable
+          androidShadow={2}
           shadow
           onPress={() => {
             onDayPress(day, hour);
