@@ -3,11 +3,11 @@ import messaging, {
   FirebaseMessagingTypes,
 } from '@react-native-firebase/messaging';
 import {useSelector, useDispatch} from 'react-redux';
-import {tokenSelector, doctorSelector} from '../../redux/selectors';
-import {postDevice} from '../../api/user';
+import {tokenSelector, doctorSelector} from '../redux/selectors';
+import {postDevice} from '../api/user';
 import {Platform} from 'react-native';
-import {getDoctorSessions} from '../../api/sessions';
-import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
+import {getDoctorSessions} from '../api/sessions';
+import {setSearchedDoctorSessionsAction} from '../redux/actions/sessionsActions';
 const NotificationHandler: React.FC = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector(tokenSelector);
@@ -17,12 +17,16 @@ const NotificationHandler: React.FC = () => {
     let unsubscribe: () => void = messaging().onMessage(notificationHandler);
 
     async function setupNotifications() {
-      const granted = await requestPermission();
-      if (granted) {
-        await registerAppWithFCM();
-        const fcmToken = await messaging().getToken();
-        await postDevice(accessToken, fcmToken, Platform.OS);
-        console.log({fcmToken});
+      try {
+        const granted = await requestPermission();
+        if (granted) {
+          await registerAppWithFCM();
+          const fcmToken = await messaging().getToken();
+          await postDevice(accessToken, fcmToken, Platform.OS);
+          console.log({fcmToken});
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
     setupNotifications();

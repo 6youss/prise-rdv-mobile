@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Image, Alert} from 'react-native';
-import styles from './styles';
 import {postLogin} from '../../api/user';
 import {useDispatch} from 'react-redux';
 import {signInAction} from '../../redux/actions/userActions';
@@ -8,6 +7,7 @@ import {ScreenContainer, Input} from '../../components';
 import Button from '../../components/Button';
 import logoWhite from '../../assets/logoWhite.png';
 import {Colors} from '../../utils/values';
+import styles from './styles';
 
 const Login: React.FC = () => {
   const dispatch = useDispatch();
