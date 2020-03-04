@@ -42,13 +42,25 @@ const NotificationHandler: React.FC = () => {
 
   const notificationHandler = React.useCallback(
     async function(message: FirebaseMessagingTypes.RemoteMessage) {
-      console.log('message recieved', message);
-      if (message.data && message.data.type === 'NEW_SESSION') {
-        dispatch(
-          setSearchedDoctorSessionsAction(
-            await getDoctorSessions(accessToken, doctor._id),
-          ),
-        );
+      try {
+        if (message.data) {
+          switch (message.data.type) {
+            case 'NEW_DOCTOR_SESSION':
+              //@NOTE this can be optimed by not getting all the sessions, we get only the new one and add it to the store
+              const refreshedDoctorSessions = await getDoctorSessions(
+                accessToken,
+                doctor._id,
+              );
+              dispatch(
+                setSearchedDoctorSessionsAction(refreshedDoctorSessions),
+              );
+              break;
+            default:
+              break;
+          }
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
     [doctor],

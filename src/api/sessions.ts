@@ -27,6 +27,7 @@ export async function getDoctorSessions(
   accessToken: string | undefined,
   doctorId: string,
 ): Promise<Array<ISession>> {
+  console.log('getting sessions', doctorId);
   const res = await fetch(`${BASE_URL}/sessions/doctor/${doctorId}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
