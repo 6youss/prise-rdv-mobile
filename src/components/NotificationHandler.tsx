@@ -5,7 +5,7 @@ import messaging, {
 import {useSelector, useDispatch} from 'react-redux';
 import {tokenSelector, doctorSelector} from '../redux/selectors';
 import {postDevice} from '../api/user';
-import {Platform} from 'react-native';
+import {Platform, NativeModules} from 'react-native';
 import {getDoctorSessions} from '../api/sessions';
 import {setSearchedDoctorSessionsAction} from '../redux/actions/sessionsActions';
 const NotificationHandler: React.FC = () => {
@@ -14,16 +14,22 @@ const NotificationHandler: React.FC = () => {
   const doctor = useSelector(doctorSelector);
 
   React.useEffect(() => {
-    let unsubscribe: () => void = messaging().onMessage(notificationHandler);
+    let unsubscribe = messaging().onMessage(notificationHandler);
 
     async function setupNotifications() {
       try {
         const granted = await requestPermission();
         if (granted) {
-          await registerAppWithFCM();
-          const fcmToken = await messaging().getToken();
+          const registered = await messaging().registerForRemoteNotifications();
+          console.log({registered});
+          let fcmToken;
+          if (Platform.OS === 'ios') {
+            fcmToken = await NativeModules.Workaround.getToken();
+          } else {
+            fcmToken = await messaging().getToken();
+          }
           await postDevice(accessToken, fcmToken, Platform.OS);
-          console.log({fcmToken});
+          console.log('posted device with', {fcmToken});
         }
       } catch (error) {
         console.log(error);
@@ -36,6 +42,7 @@ const NotificationHandler: React.FC = () => {
 
   const notificationHandler = React.useCallback(
     async function(message: FirebaseMessagingTypes.RemoteMessage) {
+      console.log('message recieved', message);
       if (message.data && message.data.type === 'NEW_SESSION') {
         dispatch(
           setSearchedDoctorSessionsAction(
@@ -59,7 +66,7 @@ const NotificationHandler: React.FC = () => {
 
   //@IMPORTANT calling this function is needed for ios
   async function registerAppWithFCM() {
-    await messaging().registerForRemoteNotifications();
+    return;
   }
 
   return null;

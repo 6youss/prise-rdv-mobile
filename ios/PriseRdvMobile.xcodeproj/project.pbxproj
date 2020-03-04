@@ -19,6 +19,7 @@
 		743FB4080BFD7138341A286C /* libPods-PriseRdvMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2970D2F7A7D48761715DEA7B /* libPods-PriseRdvMobile.a */; };
 		9F0BC551240E956000E521FF /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F0BC550240E956000E521FF /* AppCenter-Config.plist */; };
 		9FCD16C82409720A004DD5FB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FCD16C72409720A004DD5FB /* GoogleService-Info.plist */; };
+		9FD9EB62240FC5CB008A04CF /* Workaround.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FD9EB61240FC5CB008A04CF /* Workaround.m */; };
 		D10D9E37A8245C0715EAD40F /* libPods-PriseRdvMobile-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FDAE72875CAA5AB372072AD /* libPods-PriseRdvMobile-tvOS.a */; };
 		F153E86DB25F7B70AFF44688 /* libPods-PriseRdvMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 90E551D725C102EC1DE607D3 /* libPods-PriseRdvMobileTests.a */; };
 		F4C79B357F8AFCD8EEE22B71 /* libPods-PriseRdvMobile-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD4CE5658963EE8F038EEE82 /* libPods-PriseRdvMobile-tvOSTests.a */; };
@@ -66,6 +67,7 @@
 		9F0BC550240E956000E521FF /* AppCenter-Config.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "AppCenter-Config.plist"; path = "PriseRdvMobile/AppCenter-Config.plist"; sourceTree = "<group>"; };
 		9FCD16C72409720A004DD5FB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "PriseRdvMobile/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9FCD16C92409739A004DD5FB /* PriseRdvMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = PriseRdvMobile.entitlements; path = PriseRdvMobile/PriseRdvMobile.entitlements; sourceTree = "<group>"; };
+		9FD9EB61240FC5CB008A04CF /* Workaround.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Workaround.m; sourceTree = "<group>"; };
 		CB596FE0A5CFEB7124C1DA33 /* Pods-PriseRdvMobile-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PriseRdvMobile-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-PriseRdvMobile-tvOS/Pods-PriseRdvMobile-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		CF28332FBEC1D06B6BB94D8C /* Pods-PriseRdvMobile-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PriseRdvMobile-tvOS.release.xcconfig"; path = "Target Support Files/Pods-PriseRdvMobile-tvOS/Pods-PriseRdvMobile-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		DD4CE5658963EE8F038EEE82 /* libPods-PriseRdvMobile-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PriseRdvMobile-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,6 +141,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				9FD9EB61240FC5CB008A04CF /* Workaround.m */,
 			);
 			name = PriseRdvMobile;
 			sourceTree = "<group>";
@@ -601,6 +604,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FD9EB62240FC5CB008A04CF /* Workaround.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
