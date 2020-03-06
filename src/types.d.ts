@@ -1,6 +1,3 @@
-declare module '*.jpg';
-declare module '*.png';
-
 export interface IUser {
   id: string;
   username: string;
@@ -14,8 +11,25 @@ export interface IDoctor {
   lastName: string;
   phone: string;
   address: string;
-  holidays: Array<Date>;
+  unavailablities: Array<DateRange>;
+  workingHours: Array<WorkingHours>;
+  sessionDurations: Array<SessionDuration>;
+  reservationType: ReservationType;
 }
+export interface DateRange {
+  from: Date;
+  to: Date | null;
+}
+export interface SessionDuration extends DateRange {
+  duration: number;
+}
+
+export interface WorkingHours extends DateRange {
+  opensAt: number;
+  closesAt: number;
+}
+
+export type ReservationType = 'counter' | 'time';
 
 export interface IPatient {
   _id: string;

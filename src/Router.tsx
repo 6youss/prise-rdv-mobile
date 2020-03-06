@@ -9,7 +9,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {
   Splash,
   FindDoctor,
-  ReserveSession,
+  ReservationCalendar,
   Login,
   DoctorCalendar,
   DoctorProfile,
@@ -29,7 +29,7 @@ export type RootStackParamList = {
   Login: undefined;
   FindDoctor: undefined;
   PatientProfile: undefined;
-  DoctorSessions: undefined;
+  ReservationCalendar: undefined;
   DoctorCalendar: undefined;
   DoctorProfile: undefined;
   SessionDetail: {id: string};
@@ -86,7 +86,10 @@ export default function Router() {
         ) : userType === 'patient' ? (
           <>
             <Stack.Screen name="FindDoctor" component={FindDoctor} />
-            <Stack.Screen name="DoctorSessions" component={ReserveSession} />
+            <Stack.Screen
+              name="ReservationCalendar"
+              component={ReservationCalendar}
+            />
             <Stack.Screen name="PatientProfile" component={PatientProfile} />
           </>
         ) : (

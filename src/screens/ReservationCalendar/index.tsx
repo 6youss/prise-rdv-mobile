@@ -8,7 +8,7 @@ import {RootStackParamList} from '../../types';
 import styles from './styles';
 import SessionPicker from '../../components/SessionPicker';
 import {ZTime} from '../../utils/ztime';
-import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, useDispatch, shallowEqual} from 'react-redux';
 import {
   doctorSelector,
   patientSelector,
@@ -20,10 +20,12 @@ import {getDateFromString, addDays} from '../../utils/zdate';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 import {Colors, bigShadow} from '../../utils/values';
 import GoBack from '../../components/GoBack';
+import {fetchDoctorByPhone} from '../../api/doctor';
+import {setDoctorAction} from '../../redux/actions/doctorActions';
 
 type DoctorSessionsScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  'DoctorSessions'
+  'ReservationCalendar'
 >;
 
 type Props = {
@@ -33,8 +35,8 @@ type Props = {
 const ReserveSession: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch();
   const patient = useSelector(patientSelector);
-  const doctor = useSelector(doctorSelector);
-  const sessions = useSelector(sessionsSelector);
+  const doctor = useSelector(doctorSelector, shallowEqual);
+  const sessions = useSelector(sessionsSelector, shallowEqual);
   const accessToken = useSelector(tokenSelector);
   const [currentDay, setCurrentDay] = React.useState<Date>(new Date());
 
@@ -42,14 +44,15 @@ const ReserveSession: React.FC<Props> = ({navigation}) => {
     fetchSessions();
   }, []);
 
-  function fetchSessions() {
-    getDoctorSessions(accessToken, doctor._id)
-      .then(sessions => {
-        dispatch(setSearchedDoctorSessionsAction(sessions));
-      })
-      .catch(error => {
-        Alert.alert('Oops!', error.message);
-      });
+  async function fetchSessions() {
+    try {
+      const sessions = await getDoctorSessions(accessToken, doctor._id);
+      dispatch(setSearchedDoctorSessionsAction(sessions));
+      const doctorDetails = await fetchDoctorByPhone(doctor.phone);
+      dispatch(setDoctorAction(doctorDetails));
+    } catch (error) {
+      Alert.alert('Oops!', error.message);
+    }
   }
 
   function handleRightPress() {
@@ -123,6 +126,9 @@ const ReserveSession: React.FC<Props> = ({navigation}) => {
             currentDate={currentDay}
             onDayPress={handleDayPress}
             dayCount={3}
+            unavailablitites={doctor.unavailablities}
+            workingHours={doctor.workingHours}
+            sessionDurations={doctor.sessionDurations}
             sessions={sessions}
             onArrowLeftPress={handleLeftPress}
             onArrowRightPress={handleRightPress}

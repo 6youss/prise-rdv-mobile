@@ -11,8 +11,10 @@ import {
   getDateFromString,
   getStringFromDate,
   dateRange,
+  isDateInRange,
 } from '../../utils/zdate';
 import Arrow from './Arrow';
+import {IDoctor} from '../../types';
 
 export type Hours = Array<{id: string; time: string} | string>;
 
@@ -32,9 +34,12 @@ export interface SessionPickerProps {
   reverseFilter?: boolean;
   currentDate?: Date;
   dayCount?: 1 | 2 | 3 | 4 | 5;
-  startingHour?: ZTime;
-  endingHour?: ZTime;
-  sessionDuration?: number;
+  defaultStartingHour?: ZTime;
+  defaultEndingHour?: ZTime;
+  defaultSessionDuration?: number;
+  workingHours?: IDoctor['workingHours'];
+  sessionDurations?: IDoctor['sessionDurations'];
+  unavailablitites?: IDoctor['unavailablities'];
   sessions?: Sessions;
   onDayPress?: onDayPressFunction;
   onRefresh?: () => void;
@@ -46,9 +51,12 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
   reverseFilter = false,
   currentDate = new Date(),
   dayCount = 3,
-  startingHour = ZTime.fromString('08:00'),
-  endingHour = ZTime.fromString('17:00'),
-  sessionDuration = 30,
+  defaultStartingHour = ZTime.fromString('08:00'),
+  defaultEndingHour = ZTime.fromString('17:00'),
+  defaultSessionDuration = 30,
+  workingHours = [],
+  unavailablitites = [],
+  sessionDurations = [],
   sessions = {},
   onDayPress = () => {},
   onRefresh = () => {},
@@ -57,8 +65,8 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
 }) => {
   let __sessions: ZSessions = {}; //sessions formated and filtered from the sessions prop
 
-  const activeDates = dateRange(currentDate, dayCount - 1);
-  for (let date of activeDates) {
+  const shownDates = dateRange(currentDate, dayCount - 1);
+  for (let date of shownDates) {
     const dateStr = getStringFromDate(date, false);
     __sessions[dateStr] = [];
     if (sessions[dateStr])
@@ -123,12 +131,36 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
         }
         contentContainerStyle={styles.hoursContainer}>
         {Object.keys(__sessions).map(sessionDate => {
+          let startingHour = defaultStartingHour,
+            endingHour = defaultEndingHour,
+            duration = defaultSessionDuration;
+
+          for (let workHours of workingHours) {
+            if (
+              isDateInRange(
+                getDateFromString(sessionDate),
+                workHours.from,
+                workHours.to,
+                true,
+              )
+            ) {
+              startingHour = ZTime.fromMinutes(workHours.opensAt);
+              endingHour = ZTime.fromMinutes(workHours.closesAt);
+            }
+          }
+
+          for (let sd of sessionDurations) {
+            if (isDateInRange(getDateFromString(sessionDate), sd.from, sd.to)) {
+              duration = sd.duration;
+            }
+          }
+
           const availableHours = reverseFilter
             ? __sessions[sessionDate]
             : ZTime.filterAvailableHours(
                 startingHour,
                 endingHour,
-                sessionDuration,
+                duration,
                 __sessions[sessionDate],
               );
           return (

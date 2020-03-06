@@ -95,7 +95,7 @@ const FindDoctor: React.FC<Props> = ({navigation}) => {
           <FoundDoctor
             {...foundDoctor}
             onPress={() => {
-              navigation.navigate('DoctorSessions');
+              navigation.navigate('ReservationCalendar');
             }}
           />
         ) : (

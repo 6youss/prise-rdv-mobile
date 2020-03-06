@@ -22,6 +22,17 @@ export const bigShadow = {
   elevation: 50,
 };
 
+export const mediumShadow = {
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 5,
+  },
+  shadowOpacity: 0.2,
+  shadowRadius: 5,
+  elevation: 13,
+};
+
 export const smallShadow = {
   shadowColor: '#000',
   shadowOffset: {

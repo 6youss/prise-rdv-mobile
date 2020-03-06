@@ -1,11 +1,15 @@
 export class ZTime {
   static fromString(time: string, id?: string): ZTime {
-    let [h, m] = time.split(':').map(val => parseInt(val));
+    let [h = 0, m = 0] = time.split(':').map(val => parseInt(val));
     return new ZTime(h, m, id);
   }
 
   static fromHours(h: number, m: number = 0, id?: string): ZTime {
     return new ZTime(h, m, id);
+  }
+
+  static fromMinutes(m: number = 0): ZTime {
+    return new ZTime(Math.floor(m / 60), m % 60);
   }
 
   get hours(): number {
@@ -55,6 +59,12 @@ export class ZTime {
     return false;
   }
 
+  static setDateAtTime(date: Date, time: ZTime) {
+    return new Date(
+      new Date(date.setHours(time.hours)).setMinutes(time.minutes),
+    );
+  }
+
   static filterAvailableHours(
     startingHour: ZTime,
     endingHour: ZTime,
@@ -62,8 +72,13 @@ export class ZTime {
     reservedHours: Array<ZTime>,
   ): Array<ZTime> {
     let availableHours: Array<ZTime> = [];
+
     let sessionHour = startingHour;
-    while (sessionHour.isLess(endingHour)) {
+
+    while (
+      sessionHour.isLess(endingHour) &&
+      endingHour.toMinutes() - sessionHour.toMinutes() >= sessionDuration
+    ) {
       if (!reservedHours.find(hour => hour.equals(sessionHour))) {
         availableHours.push(sessionHour);
       }
