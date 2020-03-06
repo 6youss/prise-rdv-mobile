@@ -21,7 +21,7 @@ const NotificationHandler: React.FC = () => {
         const granted = await requestPermission();
         if (granted) {
           const registered = await messaging().registerForRemoteNotifications();
-          console.log({registered});
+          // console.log({registered});
           let fcmToken;
           if (Platform.OS === 'ios') {
             fcmToken = await NativeModules.Workaround.getToken();
@@ -29,7 +29,7 @@ const NotificationHandler: React.FC = () => {
             fcmToken = await messaging().getToken();
           }
           await postDevice(accessToken, fcmToken, Platform.OS);
-          console.log('posted device with', {fcmToken});
+          // console.log('posted device with', {fcmToken});
         }
       } catch (error) {
         console.log(error);

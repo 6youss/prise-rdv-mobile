@@ -14,7 +14,7 @@ const Login: React.FC = () => {
 
   const [loading, setLoading] = React.useState<boolean>(false);
   const [username, setUsername] = React.useState<string>(
-    __DEV__ ? (false ? 'doctor' : 'patient') : '',
+    __DEV__ ? (true ? 'doctor' : 'patient') : '',
   );
   const [password, setPassword] = React.useState<string>(
     __DEV__ ? '123456' : '',

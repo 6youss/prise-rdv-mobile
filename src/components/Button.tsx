@@ -1,37 +1,46 @@
 import React from 'react';
 import {StyleSheet, Text, View, ViewStyle} from 'react-native';
-import {Colors, smallShadow} from '../utils/values';
+import {Colors} from '../utils/values';
 import Touchable from './Touchable';
 import Loader from './Loader';
 
-const Button: React.FC<{
+interface ButtonProps {
   onPress: () => void;
   light?: boolean;
+  color?: ViewStyle['backgroundColor'];
   text: string;
   loading?: boolean;
   style?: ViewStyle;
-}> = ({onPress, light, text, loading = false, style}) => {
+}
+
+const Button: React.FC<ButtonProps> = ({
+  onPress,
+  light,
+  text,
+  loading = false,
+  style,
+  color,
+}) => {
   return (
-    <View style={{...smallShadow}}>
-      <Touchable
-        androidShadow={4}
-        shadow
-        onPress={!loading ? onPress : () => {}}
-        borderRadius={20}
-        style={[
-          styles.button,
-          light && {backgroundColor: Colors.white},
-          style,
-        ]}>
-        {loading ? (
-          <Loader />
-        ) : (
-          <Text style={[styles.buttonText, light && {color: Colors.primary}]}>
-            {text}
-          </Text>
-        )}
-      </Touchable>
-    </View>
+    <Touchable
+      androidShadow={4}
+      shadow
+      onPress={!loading ? onPress : () => {}}
+      borderRadius={20}
+      containerStyle={style}
+      style={[
+        styles.button,
+        light && {backgroundColor: Colors.white},
+        color !== undefined && {backgroundColor: color},
+      ]}>
+      {loading ? (
+        <Loader />
+      ) : (
+        <Text style={[styles.buttonText, light && {color: Colors.primary}]}>
+          {text}
+        </Text>
+      )}
+    </Touchable>
   );
 };
 

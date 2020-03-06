@@ -88,6 +88,13 @@ const DoctorProfile: React.FC<Props> = ({navigation}) => {
         </View>
         <View style={{flex: 1, justifyContent: 'flex-end', padding: 20}}>
           <Button
+            color={Colors.lightGray}
+            light
+            text="Disponibilités"
+            style={{marginBottom: 20}}
+            onPress={() => {}}
+          />
+          <Button
             text="Se déconnecter"
             onPress={() => {
               dispatch(signOutAction());
