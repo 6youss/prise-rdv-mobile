@@ -16,7 +16,7 @@ import SessionPicker, {
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 import {getDoctorSessions} from '../../api/sessions';
 import {Colors, bigShadow} from '../../utils/values';
-import {addDays} from '../../utils/date';
+import {addDays} from '../../utils/zdate';
 
 type FindDoctorScreenNavigationProp = StackNavigationProp<
   RootStackParamList,

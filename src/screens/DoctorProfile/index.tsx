@@ -16,7 +16,7 @@ import SessionPicker, {
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 import {getDoctorSessions} from '../../api/sessions';
 import {Colors} from '../../utils/values';
-import {addDays} from '../../utils/date';
+import {addDays} from '../../utils/zdate';
 import GoBack from '../../components/GoBack';
 import {screenWidth, screenHeight} from '../../utils/dimentions';
 import Button from '../../components/Button';

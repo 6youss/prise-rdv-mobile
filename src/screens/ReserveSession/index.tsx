@@ -16,7 +16,7 @@ import {
   sessionsSelector,
 } from '../../redux/selectors';
 import {postSession, getDoctorSessions} from '../../api/sessions';
-import {getDateFromString, addDays} from '../../utils/date';
+import {getDateFromString, addDays} from '../../utils/zdate';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 import {Colors, bigShadow} from '../../utils/values';
 import GoBack from '../../components/GoBack';

@@ -11,7 +11,7 @@ import {
   getDateFromString,
   getStringFromDate,
   dateRange,
-} from '../../utils/date';
+} from '../../utils/zdate';
 import Arrow from './Arrow';
 
 export type Hours = Array<{id: string; time: string} | string>;

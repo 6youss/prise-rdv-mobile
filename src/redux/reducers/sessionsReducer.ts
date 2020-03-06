@@ -1,7 +1,7 @@
 import {Sessions} from '../../components/SessionPicker';
 import {SessionsAction} from '../actions/sessionsActions';
 import {ISession} from '../../types';
-import {getStringFromDate} from '../../utils/date';
+import {getStringFromDate} from '../../utils/zdate';
 
 const initState: Sessions = {};
 

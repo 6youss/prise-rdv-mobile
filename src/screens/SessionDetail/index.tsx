@@ -10,7 +10,7 @@ import {ScreenContainer, Avatar, Touchable, Button} from '../../components';
 import {getSessionDetails} from '../../api/sessions';
 
 import {ISessionDetails} from '../../types';
-import {getStringFromDate} from '../../utils/date';
+import {getStringFromDate} from '../../utils/zdate';
 import defaultProfile from '../../assets/defaultProfile.jpg';
 import {Colors} from '../../utils/values';
 import GoBack from '../../components/GoBack';

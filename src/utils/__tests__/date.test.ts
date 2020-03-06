@@ -1,4 +1,4 @@
-import {getDateFromString, dateRange, addDays} from '../date';
+import {getDateFromString, dateRange, addDays} from '../zdate';
 
 it('getDateFromString date only', () => {
   expect(getDateFromString('01-02-2020')).toEqual(new Date(2020, 1, 1));
