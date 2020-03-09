@@ -6,13 +6,13 @@ import Touchable from '../Touchable';
 
 const DayColumn: React.FC<{
   day: string;
-  availableHours: ZHours;
+  hours: ZHours;
   width: number;
   onDayPress?: onDayPressFunction;
-}> = ({day, availableHours, width, onDayPress = () => {}}) => {
+}> = ({day, hours, width, onDayPress = () => {}}) => {
   return (
     <View style={[dayColStyles.container, {width: `${width}%`}]}>
-      {availableHours.map((hour, index) => (
+      {hours.map((hour, index) => (
         <Touchable
           androidShadow={2}
           shadow

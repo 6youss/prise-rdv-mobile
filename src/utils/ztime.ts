@@ -1,3 +1,5 @@
+import {DateRange} from '../types';
+
 export class ZTime {
   static fromString(time: string, id?: string): ZTime {
     let [h = 0, m = 0] = time.split(':').map(val => parseInt(val));
@@ -63,27 +65,5 @@ export class ZTime {
     return new Date(
       new Date(date.setHours(time.hours)).setMinutes(time.minutes),
     );
-  }
-
-  static filterAvailableHours(
-    startingHour: ZTime,
-    endingHour: ZTime,
-    sessionDuration: number,
-    reservedHours: Array<ZTime>,
-  ): Array<ZTime> {
-    let availableHours: Array<ZTime> = [];
-
-    let sessionHour = startingHour;
-
-    while (
-      sessionHour.isLess(endingHour) &&
-      endingHour.toMinutes() - sessionHour.toMinutes() >= sessionDuration
-    ) {
-      if (!reservedHours.find(hour => hour.equals(sessionHour))) {
-        availableHours.push(sessionHour);
-      }
-      sessionHour = sessionHour.addDuration(sessionDuration);
-    }
-    return availableHours;
   }
 }

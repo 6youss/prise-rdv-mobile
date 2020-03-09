@@ -129,7 +129,7 @@ const ReserveSession: React.FC<Props> = ({navigation}) => {
             unavailablitites={doctor.unavailablities}
             workingHours={doctor.workingHours}
             sessionDurations={doctor.sessionDurations}
-            sessions={sessions}
+            allreadyTakenHours={sessions}
             onArrowLeftPress={handleLeftPress}
             onArrowRightPress={handleRightPress}
             onRefresh={fetchSessions}

@@ -80,7 +80,7 @@ export function getDateFromString(dateTimeString: string): Date {
     let ztime = ZTime.fromString(timeString);
     return new Date(year, month - 1, day, ztime.hours, ztime.minutes);
   }
-  return new Date(year, month - 1, day);
+  return new Date(new Date(year, month - 1, day).setHours(0, 0, 0, 0));
 }
 
 export function getDayName(date: Date): string {
