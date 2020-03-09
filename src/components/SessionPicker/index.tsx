@@ -64,12 +64,14 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
   onArrowLeftPress = () => {},
 }) => {
   let __allredyTakenHours: ZSessions = {}; //sessions formated and filtered from the sessions prop
+  let availableHours: ZSessions = {};
 
-  const shownDates = dateRange(currentDate, dayCount - 1);
-  for (let date of shownDates) {
+  const shownDatesRange = dateRange(currentDate, dayCount - 1);
+
+  for (let date of shownDatesRange) {
     const dateStr = getStringFromDate(date, false);
     __allredyTakenHours[dateStr] = [];
-    if (allreadyTakenHours[dateStr])
+    if (allreadyTakenHours[dateStr]) {
       __allredyTakenHours[dateStr] = allreadyTakenHours[dateStr].map(hour => {
         if (typeof hour === 'string') {
           return ZTime.fromString(hour);
@@ -77,53 +79,13 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           return ZTime.fromString(hour.time, hour.id);
         }
       });
+    }
+    availableHours[dateStr] = getAvailableHours(dateStr);
   }
 
   const dayColumnWidth = 80 / dayCount;
 
-  const PickerHeader: React.FC = () => {
-    return (
-      <View
-        style={{
-          flexDirection: 'row',
-          height: 60,
-          alignItems: 'center',
-          backgroundColor: Colors.white,
-        }}>
-        <Arrow
-          onPress={() => {
-            onArrowLeftPress(currentDate);
-          }}
-          left
-        />
-        {Object.keys(__allredyTakenHours).map(sessionDate => {
-          const date = getDateFromString(sessionDate);
-          return (
-            <View
-              key={sessionDate}
-              style={{
-                width: `${dayColumnWidth}%`,
-              }}>
-              <Text style={dayColStyles.day}>{getDayName(date)}</Text>
-              <Text
-                style={dayColStyles.month}>{`${date.getDate()} ${getMonthName(
-                date,
-              )}`}</Text>
-            </View>
-          );
-        })}
-        <Arrow
-          onPress={() => {
-            onArrowRightPress(currentDate);
-          }}
-        />
-      </View>
-    );
-  };
-
-  function getActiveDayWorkHours(
-    date: Date,
-  ): {startingHour: ZTime; endingHour: ZTime} {
+  function getWorkHours(date: Date): {startingHour: ZTime; endingHour: ZTime} {
     let startToEnd = {
       startingHour: defaultStartingHour,
       endingHour: defaultEndingHour,
@@ -137,7 +99,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
     return startToEnd;
   }
 
-  function getActiveDaySessionDuration(date: Date): number {
+  function getSessionDuration(date: Date): number {
     for (let sd of sessionDurations) {
       if (isDateInRange(date, sd.from, sd.to)) {
         return sd.duration;
@@ -146,14 +108,12 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
     return defaultSessionDuration;
   }
 
-  function getAvailableHours(
-    startingHour: ZTime,
-    endingHour: ZTime,
-    sessionDuration: number,
-    allreadyTakenHours: Array<ZTime>,
-    unavailablitites: IDoctor['unavailablities'] = [],
-    sessionDate: Date,
-  ): Array<ZTime> {
+  function getAvailableHours(sessionDateKey: string): Array<ZTime> {
+    let allreadyTakenHours = __allredyTakenHours[sessionDateKey];
+    if (reverseFilter) return allreadyTakenHours;
+    const sessionDate = getDateFromString(sessionDateKey);
+    let {startingHour, endingHour} = getWorkHours(sessionDate);
+    let sessionDuration = getSessionDuration(sessionDate);
     let availableHours: Array<ZTime> = [];
 
     let _hour = startingHour;
@@ -179,7 +139,6 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           break;
         }
       }
-
       if (
         !isUnavailableHour &&
         !allreadyTakenHours.find(hour => hour.equals(_hour))
@@ -191,37 +150,65 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
     return availableHours;
   }
 
+  const DaysHeader: React.FC = () => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          height: 60,
+          alignItems: 'center',
+          backgroundColor: Colors.white,
+        }}>
+        <Arrow
+          onPress={() => {
+            onArrowLeftPress(currentDate);
+          }}
+          left
+        />
+        {Object.keys(availableHours).map(availableHoursDate => {
+          const date = getDateFromString(availableHoursDate);
+          const emptyDay = availableHours[availableHoursDate].length === 0;
+          return (
+            <View
+              key={availableHoursDate}
+              style={{
+                width: `${dayColumnWidth}%`,
+                opacity: emptyDay ? 0.5 : 1,
+              }}>
+              <Text style={dayColStyles.day}>{getDayName(date)}</Text>
+              <Text
+                style={[
+                  dayColStyles.month,
+                  emptyDay && {color: Colors.darkGray},
+                ]}>{`${date.getDate()} ${getMonthName(date)}`}</Text>
+            </View>
+          );
+        })}
+        <Arrow
+          onPress={() => {
+            onArrowRightPress(currentDate);
+          }}
+        />
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
-      <PickerHeader />
+      <DaysHeader />
       <ScrollView
         style={{flex: 1}}
         refreshControl={
           <RefreshControl refreshing={false} onRefresh={onRefresh} />
         }
         contentContainerStyle={styles.hoursContainer}>
-        {Object.keys(__allredyTakenHours).map(sessionDateKey => {
-          const sessionDate = getDateFromString(sessionDateKey);
-          let {startingHour, endingHour} = getActiveDayWorkHours(sessionDate);
-          let duration = getActiveDaySessionDuration(sessionDate);
-          let todaysAllreadyTakenHours = __allredyTakenHours[sessionDateKey];
-
-          const availableHours = reverseFilter
-            ? todaysAllreadyTakenHours
-            : getAvailableHours(
-                startingHour,
-                endingHour,
-                duration,
-                todaysAllreadyTakenHours,
-                unavailablitites,
-                sessionDate,
-              );
+        {Object.keys(availableHours).map(availableHoursDate => {
           return (
             <DayColumn
               width={dayColumnWidth}
-              key={'day-' + sessionDateKey}
-              day={sessionDateKey}
-              hours={availableHours}
+              key={'day-' + availableHoursDate}
+              day={availableHoursDate}
+              hours={availableHours[availableHoursDate]}
               onDayPress={onDayPress}
             />
           );

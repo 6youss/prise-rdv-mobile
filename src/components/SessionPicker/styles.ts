@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {Colors} from '../../utils/values';
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.lightGray,
     flex: 1,
   },
   hoursContainer: {
@@ -44,23 +44,4 @@ export const dayColStyles = StyleSheet.create({
   },
 });
 
-export const arrowStyles = StyleSheet.create({
-  container: {
-    width: '10%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  touchContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '90%',
-    aspectRatio: 1,
-  },
-  touch: {
-    width: '100%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 export default styles;

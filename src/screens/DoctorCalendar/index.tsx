@@ -92,7 +92,7 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
           <SessionPicker
             currentDate={currentDay}
             reverseFilter
-            sessions={sessions}
+            allreadyTakenHours={sessions}
             onDayPress={handleDayPress}
             onArrowLeftPress={handleLeftPress}
             onArrowRightPress={handleRightPress}

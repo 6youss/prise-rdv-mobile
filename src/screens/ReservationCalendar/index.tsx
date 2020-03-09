@@ -56,10 +56,10 @@ const ReserveSession: React.FC<Props> = ({navigation}) => {
   }
 
   function handleRightPress() {
-    setCurrentDay(addDays(currentDay, 2));
+    setCurrentDay(addDays(currentDay, 3));
   }
   function handleLeftPress() {
-    setCurrentDay(addDays(currentDay, -2));
+    setCurrentDay(addDays(currentDay, -3));
   }
 
   function handleDayPress(date: string, time: ZTime) {

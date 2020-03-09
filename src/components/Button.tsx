@@ -10,6 +10,7 @@ interface ButtonProps {
   color?: ViewStyle['backgroundColor'];
   text: string;
   loading?: boolean;
+  containerStyle?: ViewStyle;
   style?: ViewStyle;
 }
 
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
   light,
   text,
   loading = false,
+  containerStyle,
   style,
   color,
 }) => {
@@ -27,10 +29,11 @@ const Button: React.FC<ButtonProps> = ({
       shadow
       onPress={!loading ? onPress : () => {}}
       borderRadius={20}
-      containerStyle={style}
+      containerStyle={containerStyle}
       style={[
         styles.button,
         light && {backgroundColor: Colors.white},
+        style,
         color !== undefined && {backgroundColor: color},
       ]}>
       {loading ? (

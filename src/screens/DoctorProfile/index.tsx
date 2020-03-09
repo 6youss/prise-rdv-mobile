@@ -91,7 +91,7 @@ const DoctorProfile: React.FC<Props> = ({navigation}) => {
             color={Colors.lightGray}
             light
             text="Disponibilités"
-            style={{marginBottom: 20}}
+            containerStyle={{marginBottom: 20}}
             onPress={() => {}}
           />
           <Button

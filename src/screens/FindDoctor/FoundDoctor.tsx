@@ -24,7 +24,7 @@ const FoundDoctor: React.FC<IDoctor & {onPress: () => void}> = ({
       <Button
         text="Prendre rendez-vous"
         onPress={onPress}
-        style={{paddingHorizontal: 30}}
+        style={{paddingHorizontal: 40}}
       />
     </View>
   );
