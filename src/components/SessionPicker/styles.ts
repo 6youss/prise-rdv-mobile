@@ -31,6 +31,7 @@ export const dayColStyles = StyleSheet.create({
     fontSize: 17,
   },
   hour: {
+    position: 'relative',
     width: '100%',
     height: '100%',
     justifyContent: 'center',
@@ -41,6 +42,15 @@ export const dayColStyles = StyleSheet.create({
     color: Colors.primary,
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  dot: {
+    position: 'absolute',
+    backgroundColor: Colors.secondary,
+    width: 10,
+    height: 10,
+    borderRadius: 10,
+    right: 5,
+    bottom: 5,
   },
 });
 

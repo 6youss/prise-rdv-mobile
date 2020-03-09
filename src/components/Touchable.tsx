@@ -8,6 +8,7 @@ import {
   ViewStyle,
   Platform,
   ViewProps,
+  TouchableOpacityProps,
 } from 'react-native';
 import {Colors, smallShadow} from '../utils/values';
 
@@ -15,6 +16,7 @@ const Touchable: React.FC<TouchableNativeFeedbackProps & {
   borderRadius?: number;
   containerStyle?: StyleProp<ViewStyle>;
   borderRadiusViewStyle?: StyleProp<ViewStyle>;
+  style: TouchableOpacityProps;
   rippleColor?: string;
   shadow?: boolean;
   androidShadow?: number;

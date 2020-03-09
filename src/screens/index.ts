@@ -5,4 +5,5 @@ export {default as ReservationCalendar} from './ReservationCalendar';
 export {default as Login} from './Login';
 export {default as DoctorCalendar} from './DoctorCalendar';
 export {default as DoctorProfile} from './DoctorProfile';
+export {default as DoctorAvailablities} from './DoctorAvailablities';
 export {default as SessionDetail} from './SessionDetail';

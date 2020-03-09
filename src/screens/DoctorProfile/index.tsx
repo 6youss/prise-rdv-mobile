@@ -1,24 +1,14 @@
 import React from 'react';
-import {View, Text, Alert} from 'react-native';
+import {View, Text} from 'react-native';
 import styles from './styles';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../Router';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  doctorSelector,
-  tokenSelector,
-  sessionsSelector,
-} from '../../redux/selectors';
-import {ScreenContainer, Avatar, Touchable} from '../../components';
-import SessionPicker, {
-  onDayPressFunction,
-} from '../../components/SessionPicker';
-import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
-import {getDoctorSessions} from '../../api/sessions';
+import {doctorSelector} from '../../redux/selectors';
+import {ScreenContainer, Avatar} from '../../components';
 import {Colors} from '../../utils/values';
-import {addDays} from '../../utils/zdate';
 import GoBack from '../../components/GoBack';
-import {screenWidth, screenHeight} from '../../utils/dimentions';
+import {screenWidth} from '../../utils/dimentions';
 import Button from '../../components/Button';
 import {signOutAction} from '../../redux/actions/userActions';
 
@@ -33,7 +23,6 @@ type Props = {
 const DoctorProfile: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch();
   const doctor = useSelector(doctorSelector);
-  const accessToken = useSelector(tokenSelector);
 
   return (
     <ScreenContainer
@@ -67,24 +56,10 @@ const DoctorProfile: React.FC<Props> = ({navigation}) => {
               fontWeight: 'bold',
               margin: 7,
             }}>{`Pr. ${doctor.firstName} ${doctor.lastName}`}</Text>
-          <Text
-            style={{
-              width: screenWidth(60),
-              textAlign: 'center',
-              color: Colors.darkGray,
-            }}>{`${doctor.address}`}</Text>
+          <Text style={styles.addressText}>{`${doctor.address}`}</Text>
         </View>
         <View style={{alignItems: 'center', padding: 20}}>
-          <Text
-            style={{
-              width: screenWidth(60),
-              textAlign: 'center',
-              fontSize: 26,
-              fontWeight: 'bold',
-              color: Colors.secondary,
-              letterSpacing: 2,
-              margin: 20,
-            }}>{`${doctor.phone}`}</Text>
+          <Text style={styles.phoneText}>{`${doctor.phone}`}</Text>
         </View>
         <View style={{flex: 1, justifyContent: 'flex-end', padding: 20}}>
           <Button
@@ -92,7 +67,9 @@ const DoctorProfile: React.FC<Props> = ({navigation}) => {
             light
             text="Disponibilités"
             containerStyle={{marginBottom: 20}}
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('DoctorAvailablities');
+            }}
           />
           <Button
             text="Se déconnecter"

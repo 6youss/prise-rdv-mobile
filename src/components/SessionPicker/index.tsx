@@ -31,7 +31,7 @@ export interface ZSessions {
 export type onDayPressFunction = (day: string, hour: ZTime) => void;
 
 export interface SessionPickerProps {
-  reverseFilter?: boolean;
+  filterMode?: 'taken' | 'available' | 'both';
   currentDate?: Date;
   dayCount?: 1 | 2 | 3 | 4 | 5;
   defaultStartingHour?: ZTime;
@@ -48,7 +48,7 @@ export interface SessionPickerProps {
 }
 
 const SessionPicker: React.FC<SessionPickerProps> = ({
-  reverseFilter = false,
+  filterMode = 'available',
   currentDate = new Date(),
   dayCount = 3,
   defaultStartingHour = ZTime.fromString('08:00'),
@@ -64,7 +64,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
   onArrowLeftPress = () => {},
 }) => {
   let __allredyTakenHours: ZSessions = {}; //sessions formated and filtered from the sessions prop
-  let availableHours: ZSessions = {};
+  let filteredHours: ZSessions = {};
 
   const shownDatesRange = dateRange(currentDate, dayCount - 1);
 
@@ -80,7 +80,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
         }
       });
     }
-    availableHours[dateStr] = getAvailableHours(dateStr);
+    filteredHours[dateStr] = getShownHours(dateStr);
   }
 
   const dayColumnWidth = 80 / dayCount;
@@ -108,14 +108,12 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
     return defaultSessionDuration;
   }
 
-  function getAvailableHours(sessionDateKey: string): Array<ZTime> {
+  function getShownHours(sessionDateKey: string): Array<ZTime> {
     let allreadyTakenHours = __allredyTakenHours[sessionDateKey];
-    if (reverseFilter) return allreadyTakenHours;
     const sessionDate = getDateFromString(sessionDateKey);
     let {startingHour, endingHour} = getWorkHours(sessionDate);
     let sessionDuration = getSessionDuration(sessionDate);
-    let availableHours: Array<ZTime> = [];
-
+    let shownHours: Array<ZTime> = [];
     let _hour = startingHour;
 
     while (
@@ -139,15 +137,15 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           break;
         }
       }
-      if (
-        !isUnavailableHour &&
-        !allreadyTakenHours.find(hour => hour.equals(_hour))
-      ) {
-        availableHours.push(_hour);
-      }
+      if (isUnavailableHour) _hour.unavailable = true;
+      const takenHour = allreadyTakenHours.find(hour => hour.equals(_hour));
+      if (takenHour)
+        _hour = ZTime.fromString(takenHour.toString(), takenHour.id);
+
+      shownHours.push(_hour);
       _hour = _hour.addDuration(sessionDuration);
     }
-    return availableHours;
+    return shownHours;
   }
 
   const DaysHeader: React.FC = () => {
@@ -165,9 +163,12 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           }}
           left
         />
-        {Object.keys(availableHours).map(availableHoursDate => {
+        {Object.keys(filteredHours).map(availableHoursDate => {
           const date = getDateFromString(availableHoursDate);
-          const emptyDay = availableHours[availableHoursDate].length === 0;
+          const emptyDay =
+            filteredHours[availableHoursDate].find(
+              hour => !hour.id && !hour.unavailable,
+            ) === undefined && filterMode !== 'both';
           return (
             <View
               key={availableHoursDate}
@@ -202,13 +203,14 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           <RefreshControl refreshing={false} onRefresh={onRefresh} />
         }
         contentContainerStyle={styles.hoursContainer}>
-        {Object.keys(availableHours).map(availableHoursDate => {
+        {Object.keys(filteredHours).map(date => {
           return (
             <DayColumn
+              filerMode={filterMode}
               width={dayColumnWidth}
-              key={'day-' + availableHoursDate}
-              day={availableHoursDate}
-              hours={availableHours[availableHoursDate]}
+              key={'day-' + date}
+              day={date}
+              hours={filteredHours[date]}
               onDayPress={onDayPress}
             />
           );

@@ -1,6 +1,8 @@
 import {DateRange} from '../types';
 
 export class ZTime {
+  private _unavailable: boolean | undefined = undefined;
+
   static fromString(time: string, id?: string): ZTime {
     let [h = 0, m = 0] = time.split(':').map(val => parseInt(val));
     return new ZTime(h, m, id);
@@ -12,6 +14,13 @@ export class ZTime {
 
   static fromMinutes(m: number = 0): ZTime {
     return new ZTime(Math.floor(m / 60), m % 60);
+  }
+
+  set unavailable(unavailable: boolean | undefined) {
+    this._unavailable = unavailable;
+  }
+  get unavailable(): boolean | undefined {
+    return this._unavailable;
   }
 
   get hours(): number {

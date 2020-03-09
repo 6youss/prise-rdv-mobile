@@ -18,15 +18,15 @@ import {getDoctorSessions} from '../../api/sessions';
 import {Colors, bigShadow} from '../../utils/values';
 import {addDays} from '../../utils/zdate';
 
-type DoctorCalendarScreenNavigationProp = StackNavigationProp<
+type DoctorAvailblititesScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  'DoctorCalendar'
+  'DoctorAvailablities'
 >;
 
 type Props = {
-  navigation: DoctorCalendarScreenNavigationProp;
+  navigation: DoctorAvailblititesScreenNavigationProp;
 };
-const DoctorCalendar: React.FC<Props> = ({navigation}) => {
+const DoctorAvailablities: React.FC<Props> = ({navigation}) => {
   const dispatch = useDispatch();
   const doctor = useSelector(doctorSelector);
   const accessToken = useSelector(tokenSelector);
@@ -48,11 +48,7 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
   }
 
   const handleDayPress: onDayPressFunction = (day, hour) => {
-    if (hour.id) {
-      navigation.navigate('SessionDetail', {id: hour.id});
-    } else {
-      throw new Error('unexpected undefined session id');
-    }
+    console.log(day, hour);
   };
 
   function handleRightPress() {
@@ -67,7 +63,7 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
       status={{backgroundColor: Colors.white, barStyle: 'dark-content'}}
       safeArea={{style: {backgroundColor: Colors.white}}}>
       <View style={styles.header}>
-        <Text style={styles.calendarTitle}>Votre calendrier de visites</Text>
+        <Text style={styles.calendarTitle}>Disponibilités</Text>
         <Touchable
           borderRadius={30}
           onPress={() => {
@@ -91,7 +87,7 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
           ]}>
           <SessionPicker
             currentDate={currentDay}
-            filterMode="taken"
+            filterMode="both"
             allreadyTakenHours={sessions}
             onDayPress={handleDayPress}
             onArrowLeftPress={handleLeftPress}
@@ -104,4 +100,4 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
   );
 };
 
-export default DoctorCalendar;
+export default DoctorAvailablities;

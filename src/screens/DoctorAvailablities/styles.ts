@@ -1,6 +1,5 @@
 import {StyleSheet} from 'react-native';
 import {Colors} from '../../utils/values';
-import {screenWidth} from '../../utils/dimentions';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,19 +8,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.lightGray,
   },
-  phoneText: {
-    width: screenWidth(60),
-    textAlign: 'center',
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: Colors.secondary,
-    letterSpacing: 2,
-    margin: 20,
+  sessionPickerContainer: {
+    flexGrow: 1,
+    overflow: 'hidden',
+    borderRadius: 20,
   },
-  addressText: {
-    width: screenWidth(60),
-    textAlign: 'center',
+  calendarTitle: {
+    fontSize: 15,
+    // fontWeight: 'bold',
     color: Colors.darkGray,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 7,
   },
 });
 export default styles;
