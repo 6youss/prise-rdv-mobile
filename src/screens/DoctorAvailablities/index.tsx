@@ -16,7 +16,9 @@ import SessionPicker, {
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 import {getDoctorSessions} from '../../api/sessions';
 import {Colors, bigShadow} from '../../utils/values';
-import {addDays} from '../../utils/zdate';
+import {addDays, getDateFromString, addMinutes} from '../../utils/zdate';
+import {IDoctor} from '../../types';
+import {ZTime} from '../../utils/ztime';
 
 type DoctorAvailblititesScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -32,6 +34,9 @@ const DoctorAvailablities: React.FC<Props> = ({navigation}) => {
   const accessToken = useSelector(tokenSelector);
   const sessions = useSelector(sessionsSelector);
   const [currentDay, setCurrentDay] = React.useState<Date>(new Date());
+  const [editedUnavailibities, setEditedUnavailibities] = React.useState<
+    IDoctor['unavailablities']
+  >([]);
 
   React.useEffect(() => {
     fetchSessions();
@@ -47,8 +52,15 @@ const DoctorAvailablities: React.FC<Props> = ({navigation}) => {
       });
   }
 
-  const handleDayPress: onDayPressFunction = (day, hour) => {
-    console.log(day, hour);
+  const handleDayPress: onDayPressFunction = (day, time) => {
+    const pressedDate = ZTime.setDateAtTime(getDateFromString(day), time);
+
+    let newEditedUnavailibities = [...editedUnavailibities];
+    newEditedUnavailibities.push({
+      from: pressedDate,
+      to: addMinutes(pressedDate, 29),
+    });
+    setEditedUnavailibities(newEditedUnavailibities);
   };
 
   function handleRightPress() {
@@ -57,6 +69,10 @@ const DoctorAvailablities: React.FC<Props> = ({navigation}) => {
   function handleLeftPress() {
     setCurrentDay(addDays(currentDay, -3));
   }
+
+  const unavailablitiesConcat = doctor.unavailablities.concat(
+    editedUnavailibities,
+  );
 
   return (
     <ScreenContainer
@@ -89,7 +105,7 @@ const DoctorAvailablities: React.FC<Props> = ({navigation}) => {
             filterMode="both"
             currentDate={currentDay}
             allreadyTakenHours={sessions}
-            unavailablitites={doctor.unavailablities}
+            unavailablitites={unavailablitiesConcat}
             workingHours={doctor.workingHours}
             sessionDurations={doctor.sessionDurations}
             onDayPress={handleDayPress}

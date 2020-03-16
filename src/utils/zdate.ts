@@ -95,6 +95,7 @@ export function getDayName(date: Date): string {
   ];
   return days[date.getDay()];
 }
+
 export function getMonthName(date: Date, short: boolean = true): string {
   const months = [
     'Janvier',
