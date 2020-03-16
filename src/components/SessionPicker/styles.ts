@@ -38,10 +38,16 @@ export const dayColStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.white,
   },
+  takenHour: {
+    backgroundColor: Colors.primary,
+  },
   hourText: {
     color: Colors.primary,
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  takenHourText: {
+    color: Colors.white,
   },
   dot: {
     position: 'absolute',

@@ -90,8 +90,8 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
             {elevation: bigShadow.elevation},
           ]}>
           <SessionPicker
-            currentDate={currentDay}
             filterMode="taken"
+            currentDate={currentDay}
             allreadyTakenHours={sessions}
             onDayPress={handleDayPress}
             onArrowLeftPress={handleLeftPress}

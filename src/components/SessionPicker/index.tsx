@@ -31,7 +31,7 @@ export interface ZSessions {
 export type onDayPressFunction = (day: string, hour: ZTime) => void;
 
 export interface SessionPickerProps {
-  filterMode?: 'taken' | 'available' | 'both';
+  filterMode: 'taken' | 'available' | 'both';
   currentDate?: Date;
   dayCount?: 1 | 2 | 3 | 4 | 5;
   defaultStartingHour?: ZTime;
@@ -48,7 +48,7 @@ export interface SessionPickerProps {
 }
 
 const SessionPicker: React.FC<SessionPickerProps> = ({
-  filterMode = 'available',
+  filterMode,
   currentDate = new Date(),
   dayCount = 3,
   defaultStartingHour = ZTime.fromString('08:00'),
@@ -63,11 +63,12 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
   onArrowRightPress = () => {},
   onArrowLeftPress = () => {},
 }) => {
-  let __allredyTakenHours: ZSessions = {}; //__allredyTakenHours formated to use ZTime type
+  const dayColumnWidth = 80 / dayCount;
+  const shownDatesRange = dateRange(currentDate, dayCount - 1);
   let filteredHours: ZSessions = {};
 
-  const shownDatesRange = dateRange(currentDate, dayCount - 1);
-
+  //allredyTakenHours formated to use ZTime type
+  let __allredyTakenHours: ZSessions = {};
   for (let date of shownDatesRange) {
     const dateStr = getStringFromDate(date, false);
     __allredyTakenHours[dateStr] = [];
@@ -80,10 +81,8 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
         }
       });
     }
-    filteredHours[dateStr] = getShownHours(dateStr);
+    filteredHours[dateStr] = filterHours(dateStr);
   }
-
-  const dayColumnWidth = 80 / dayCount;
 
   function getWorkHours(date: Date): {startingHour: ZTime; endingHour: ZTime} {
     let range = {
@@ -109,14 +108,14 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
     return sessionDuration;
   }
 
-  function getShownHours(sessionDateKey: string): Array<ZTime> {
+  function filterHours(sessionDateKey: string): Array<ZTime> {
     let allreadyTakenHours = __allredyTakenHours[sessionDateKey];
     const sessionDate = getDateFromString(sessionDateKey);
 
     let {startingHour, endingHour} = getWorkHours(sessionDate);
 
     let sessionDuration = getSessionDuration(sessionDate);
-    let shownHours: Array<ZTime> = [];
+    let filteredHours: Array<ZTime> = [];
     let _hour = startingHour;
 
     while (
@@ -147,10 +146,26 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
         _hour.id = takenHour.id;
       }
 
-      shownHours.push(_hour);
+      switch (filterMode) {
+        case 'available': {
+          if (!_hour.unavailable && !_hour.id) {
+            filteredHours.push(_hour);
+          }
+          break;
+        }
+        case 'taken': {
+          if (_hour.id) filteredHours.push(_hour);
+          break;
+        }
+        case 'both':
+        default:
+          filteredHours.push(_hour);
+          break;
+      }
+
       _hour = _hour.addDuration(sessionDuration);
     }
-    return shownHours;
+    return filteredHours;
   }
 
   const DaysHeader: React.FC = () => {
@@ -168,15 +183,12 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           }}
           left
         />
-        {Object.keys(filteredHours).map(availableHoursDate => {
-          const date = getDateFromString(availableHoursDate);
-          const emptyDay =
-            filteredHours[availableHoursDate].find(
-              hour => !hour.id && !hour.unavailable,
-            ) === undefined && filterMode !== 'both';
+        {Object.keys(filteredHours).map(dateKey => {
+          const date = getDateFromString(dateKey);
+          const emptyDay = filteredHours[dateKey].length === 0;
           return (
             <View
-              key={availableHoursDate}
+              key={dateKey}
               style={{
                 width: `${dayColumnWidth}%`,
                 opacity: emptyDay ? 0.5 : 1,
@@ -211,7 +223,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
         {Object.keys(filteredHours).map(date => {
           return (
             <DayColumn
-              filerMode={filterMode}
+              filterMode={filterMode}
               width={dayColumnWidth}
               key={'day-' + date}
               day={date}

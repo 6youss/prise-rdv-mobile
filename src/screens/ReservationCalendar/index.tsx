@@ -123,6 +123,7 @@ const ReserveSession: React.FC<Props> = ({navigation}) => {
         <View
           style={[styles.pickerContainer, {elevation: bigShadow.elevation}]}>
           <SessionPicker
+            filterMode="available"
             currentDate={currentDay}
             onDayPress={handleDayPress}
             dayCount={3}
