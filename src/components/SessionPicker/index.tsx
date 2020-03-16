@@ -136,10 +136,11 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           )
         ) {
           isUnavailableHour = true;
-          break;
         }
       }
-      if (isUnavailableHour) _hour.unavailable = true;
+      if (isUnavailableHour) {
+        _hour.unavailable = true;
+      }
 
       const takenHour = allreadyTakenHours.find(hour => hour.equals(_hour));
       if (takenHour) {

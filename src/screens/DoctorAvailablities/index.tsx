@@ -86,9 +86,12 @@ const DoctorAvailablities: React.FC<Props> = ({navigation}) => {
             {elevation: bigShadow.elevation},
           ]}>
           <SessionPicker
-            currentDate={currentDay}
             filterMode="both"
+            currentDate={currentDay}
             allreadyTakenHours={sessions}
+            unavailablitites={doctor.unavailablities}
+            workingHours={doctor.workingHours}
+            sessionDurations={doctor.sessionDurations}
             onDayPress={handleDayPress}
             onArrowLeftPress={handleLeftPress}
             onArrowRightPress={handleRightPress}

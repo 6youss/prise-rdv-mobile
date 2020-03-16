@@ -13,7 +13,6 @@ interface DayColumnProps {
 }
 
 const DayColumn: React.FC<DayColumnProps> = ({
-  filterMode,
   day,
   hours,
   width,
@@ -26,13 +25,17 @@ const DayColumn: React.FC<DayColumnProps> = ({
         return (
           <Touchable
             androidShadow={2}
-            shadow
+            shadow={!hour.unavailable}
             onPress={() => {
               onDayPress(day, hour);
             }}
             key={'hour-' + index}
             containerStyle={{width: '90%', height: 70, marginVertical: 5}}
-            style={[dayColStyles.hour, isHourTaken && dayColStyles.takenHour]}
+            style={[
+              dayColStyles.hour,
+              isHourTaken && dayColStyles.takenHour,
+              hour.unavailable && {opacity: 0.3},
+            ]}
             borderRadius={8}>
             <Text
               style={[

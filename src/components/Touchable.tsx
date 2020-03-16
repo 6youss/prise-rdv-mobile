@@ -38,9 +38,9 @@ const Touchable: React.FC<TouchableNativeFeedbackProps & {
           {
             overflow: 'hidden',
             borderRadius,
-            elevation: androidShadow,
           },
           borderRadiusViewStyle,
+          shadow && {elevation: androidShadow},
         ]}>
         {Platform.OS === 'android' ? (
           <TouchableNativeFeedback
