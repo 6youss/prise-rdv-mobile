@@ -17,7 +17,7 @@ const DayColumn: React.FC<{
       {hours.map((hour, index) => {
         switch (filerMode) {
           case 'available':
-            if (!hour.unavailable)
+            if (!hour.unavailable && !hour.id)
               return (
                 <Touchable
                   androidShadow={2}

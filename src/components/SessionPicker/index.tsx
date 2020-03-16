@@ -63,7 +63,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
   onArrowRightPress = () => {},
   onArrowLeftPress = () => {},
 }) => {
-  let __allredyTakenHours: ZSessions = {}; //sessions formated and filtered from the sessions prop
+  let __allredyTakenHours: ZSessions = {}; //__allredyTakenHours formated to use ZTime type
   let filteredHours: ZSessions = {};
 
   const shownDatesRange = dateRange(currentDate, dayCount - 1);
@@ -86,32 +86,35 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
   const dayColumnWidth = 80 / dayCount;
 
   function getWorkHours(date: Date): {startingHour: ZTime; endingHour: ZTime} {
-    let startToEnd = {
+    let range = {
       startingHour: defaultStartingHour,
       endingHour: defaultEndingHour,
     };
     for (let wh of workingHours) {
       if (isDateInRange(date, wh.from, wh.to)) {
-        startToEnd.startingHour = ZTime.fromMinutes(wh.opensAt);
-        startToEnd.endingHour = ZTime.fromMinutes(wh.closesAt);
+        range.startingHour = ZTime.fromMinutes(wh.opensAt);
+        range.endingHour = ZTime.fromMinutes(wh.closesAt);
       }
     }
-    return startToEnd;
+    return range;
   }
 
   function getSessionDuration(date: Date): number {
+    let sessionDuration = defaultSessionDuration;
     for (let sd of sessionDurations) {
       if (isDateInRange(date, sd.from, sd.to)) {
-        return sd.duration;
+        sessionDuration = sd.duration;
       }
     }
-    return defaultSessionDuration;
+    return sessionDuration;
   }
 
   function getShownHours(sessionDateKey: string): Array<ZTime> {
     let allreadyTakenHours = __allredyTakenHours[sessionDateKey];
     const sessionDate = getDateFromString(sessionDateKey);
+
     let {startingHour, endingHour} = getWorkHours(sessionDate);
+
     let sessionDuration = getSessionDuration(sessionDate);
     let shownHours: Array<ZTime> = [];
     let _hour = startingHour;
@@ -138,9 +141,11 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
         }
       }
       if (isUnavailableHour) _hour.unavailable = true;
+
       const takenHour = allreadyTakenHours.find(hour => hour.equals(_hour));
-      if (takenHour)
-        _hour = ZTime.fromString(takenHour.toString(), takenHour.id);
+      if (takenHour) {
+        _hour.id = takenHour.id;
+      }
 
       shownHours.push(_hour);
       _hour = _hour.addDuration(sessionDuration);

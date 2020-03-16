@@ -32,6 +32,9 @@ export class ZTime {
   get id(): string | undefined {
     return this._id;
   }
+  set id(id: string | undefined) {
+    this._id = id;
+  }
   private constructor(
     private _hours: number,
     private _minutes: number,

@@ -45,6 +45,6 @@ export const smallShadow = {
 };
 
 export const BASE_URL = __DEV__
-  ? 'http://192.168.12.112:8000/api'
+  ? 'http://192.168.0.30:8000/api'
   : // ?  'https://zedoctolib.herokuapp.com/api/'
     'https://zedoctolib.herokuapp.com/api/';
