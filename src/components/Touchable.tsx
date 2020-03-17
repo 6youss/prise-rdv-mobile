@@ -16,7 +16,7 @@ const Touchable: React.FC<TouchableNativeFeedbackProps & {
   borderRadius?: number;
   containerStyle?: StyleProp<ViewStyle>;
   borderRadiusViewStyle?: StyleProp<ViewStyle>;
-  style: TouchableOpacityProps;
+  style?: TouchableOpacityProps;
   rippleColor?: string;
   shadow?: boolean;
   androidShadow?: number;

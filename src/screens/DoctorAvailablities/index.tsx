@@ -11,7 +11,7 @@ import {
 } from '../../redux/selectors';
 import {ScreenContainer, Avatar, Touchable} from '../../components';
 import SessionPicker, {
-  onDayPressFunction,
+  onHourPressFunction,
 } from '../../components/SessionPicker';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 import {getDoctorSessions} from '../../api/sessions';
@@ -52,13 +52,11 @@ const DoctorAvailablities: React.FC<Props> = ({navigation}) => {
       });
   }
 
-  const handleDayPress: onDayPressFunction = (day, time) => {
-    const pressedDate = ZTime.setDateAtTime(getDateFromString(day), time);
-
+  const handleHourPress: onHourPressFunction = date => {
     let newEditedUnavailibities = [...editedUnavailibities];
     newEditedUnavailibities.push({
-      from: pressedDate,
-      to: addMinutes(pressedDate, 29),
+      from: date,
+      to: addMinutes(date, 29),
     });
     setEditedUnavailibities(newEditedUnavailibities);
   };
@@ -108,7 +106,7 @@ const DoctorAvailablities: React.FC<Props> = ({navigation}) => {
             unavailablitites={unavailablitiesConcat}
             workingHours={doctor.workingHours}
             sessionDurations={doctor.sessionDurations}
-            onDayPress={handleDayPress}
+            onHourPress={handleHourPress}
             onArrowLeftPress={handleLeftPress}
             onArrowRightPress={handleRightPress}
             onRefresh={fetchSessions}

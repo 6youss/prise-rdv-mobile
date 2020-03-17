@@ -11,7 +11,7 @@ import {
 } from '../../redux/selectors';
 import {ScreenContainer, Avatar, Touchable} from '../../components';
 import SessionPicker, {
-  onDayPressFunction,
+  onHourPressFunction,
 } from '../../components/SessionPicker';
 import {setSearchedDoctorSessionsAction} from '../../redux/actions/sessionsActions';
 import {getDoctorSessions} from '../../api/sessions';
@@ -47,7 +47,7 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
       });
   }
 
-  const handleDayPress: onDayPressFunction = (day, hour) => {
+  const handleDayPress: onHourPressFunction = (day, hour) => {
     if (hour.id) {
       navigation.navigate('SessionDetail', {id: hour.id});
     } else {
@@ -93,7 +93,7 @@ const DoctorCalendar: React.FC<Props> = ({navigation}) => {
             filterMode="taken"
             currentDate={currentDay}
             allreadyTakenHours={sessions}
-            onDayPress={handleDayPress}
+            onHourPress={handleDayPress}
             onArrowLeftPress={handleLeftPress}
             onArrowRightPress={handleRightPress}
             onRefresh={fetchSessions}

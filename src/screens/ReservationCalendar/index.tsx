@@ -62,7 +62,7 @@ const ReserveSession: React.FC<Props> = ({navigation}) => {
     setCurrentDay(addDays(currentDay, -3));
   }
 
-  function handleDayPress(date: string, time: ZTime) {
+  function handleHourPress(date: Date, time: ZTime) {
     Alert.alert(
       'Prendre rendez vous',
       `Confirmer la prise du rendez-vous le ${date} à ${time.toString()} ?`,
@@ -70,12 +70,7 @@ const ReserveSession: React.FC<Props> = ({navigation}) => {
         {
           text: 'Confirmer',
           onPress: () => {
-            postSession(
-              accessToken,
-              patient._id,
-              doctor._id,
-              getDateFromString(`${date}T${time.toString()}`),
-            )
+            postSession(accessToken, patient._id, doctor._id, date)
               .then(session => {
                 fetchSessions();
                 Alert.alert('Success', `session prise avec succes`);
@@ -125,7 +120,7 @@ const ReserveSession: React.FC<Props> = ({navigation}) => {
           <SessionPicker
             filterMode="available"
             currentDate={currentDay}
-            onDayPress={handleDayPress}
+            onHourPress={handleHourPress}
             dayCount={3}
             unavailablitites={doctor.unavailablities}
             workingHours={doctor.workingHours}

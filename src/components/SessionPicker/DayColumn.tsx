@@ -1,22 +1,24 @@
 import React from 'react';
 import {View, Text} from 'react-native';
-import {ZHours, onDayPressFunction, SessionPickerProps} from '.';
+import {ZHours, onHourPressFunction, SessionPickerProps} from '.';
 import {dayColStyles} from './styles';
 import Touchable from '../Touchable';
+import {ZTime} from '../../utils/ztime';
+import {getDateFromString} from '../../utils/zdate';
 
 interface DayColumnProps {
   filterMode: SessionPickerProps['filterMode'];
   day: string;
   hours: ZHours;
   width: number;
-  onDayPress?: onDayPressFunction;
+  onHourPress?: onHourPressFunction;
 }
 
 const DayColumn: React.FC<DayColumnProps> = ({
   day,
   hours,
   width,
-  onDayPress = () => {},
+  onHourPress = () => {},
 }) => {
   return (
     <View style={[dayColStyles.container, {width: `${width}%`}]}>
@@ -27,7 +29,10 @@ const DayColumn: React.FC<DayColumnProps> = ({
             androidShadow={2}
             shadow={!hour.unavailable}
             onPress={() => {
-              onDayPress(day, hour);
+              onHourPress(
+                ZTime.setDateAtTime(getDateFromString(day), hour),
+                hour,
+              );
             }}
             key={'hour-' + index}
             containerStyle={{width: '90%', height: 70, marginVertical: 5}}

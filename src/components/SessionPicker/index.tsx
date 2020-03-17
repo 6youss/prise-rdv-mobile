@@ -15,6 +15,7 @@ import {
 } from '../../utils/zdate';
 import Arrow from './Arrow';
 import {IDoctor} from '../../types';
+import Touchable from '../Touchable';
 
 export type Hours = Array<{id: string; time: string} | string>;
 
@@ -28,7 +29,8 @@ export interface ZSessions {
   [date: string]: ZHours;
 }
 
-export type onDayPressFunction = (day: string, hour: ZTime) => void;
+export type onHourPressFunction = (dayTime: Date, hour: ZTime) => void;
+export type onDayPressFunction = (day: Date) => void;
 
 export interface SessionPickerProps {
   filterMode: 'taken' | 'available' | 'both';
@@ -41,6 +43,7 @@ export interface SessionPickerProps {
   sessionDurations?: IDoctor['sessionDurations'];
   unavailablitites?: IDoctor['unavailablities'];
   allreadyTakenHours?: Sessions;
+  onHourPress?: onHourPressFunction;
   onDayPress?: onDayPressFunction;
   onRefresh?: () => void;
   onArrowRightPress?: (currentDate: Date) => void;
@@ -58,6 +61,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
   unavailablitites = [],
   sessionDurations = [],
   allreadyTakenHours = {},
+  onHourPress = () => {},
   onDayPress = () => {},
   onRefresh = () => {},
   onArrowRightPress = () => {},
@@ -191,9 +195,12 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           const date = getDateFromString(dateKey);
           const emptyDay = filteredHours[dateKey].length === 0;
           return (
-            <View
+            <Touchable
+              onPress={() => {
+                onDayPress(date);
+              }}
               key={dateKey}
-              style={{
+              containerStyle={{
                 width: `${dayColumnWidth}%`,
                 opacity: emptyDay ? 0.5 : 1,
               }}>
@@ -203,7 +210,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
                   dayColStyles.month,
                   emptyDay && {color: Colors.darkGray},
                 ]}>{`${date.getDate()} ${getMonthName(date)}`}</Text>
-            </View>
+            </Touchable>
           );
         })}
         <Arrow
@@ -233,7 +240,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
               key={'day-' + date}
               day={date}
               hours={filteredHours[date]}
-              onDayPress={onDayPress}
+              onHourPress={onHourPress}
             />
           );
         })}
