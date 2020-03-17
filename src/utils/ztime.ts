@@ -47,6 +47,12 @@ export class ZTime {
     return new ZTime(newHH, newMM);
   }
 
+  copy() {
+    const copy = ZTime.fromString(this.toString(), this._id);
+    copy.unavailable = this._unavailable;
+    return copy;
+  }
+
   isLess(zdate: ZTime) {
     return this.toMinutes() < zdate.toMinutes();
   }

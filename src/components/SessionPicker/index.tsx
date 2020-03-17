@@ -116,7 +116,8 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
 
     let sessionDuration = getSessionDuration(sessionDate);
     let filteredHours: Array<ZTime> = [];
-    let _hour = startingHour;
+
+    let _hour = startingHour.copy();
 
     while (
       _hour.isLess(endingHour) &&
@@ -136,6 +137,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
           )
         ) {
           isUnavailableHour = true;
+          break;
         }
       }
       if (isUnavailableHour) {
@@ -150,6 +152,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
       switch (filterMode) {
         case 'available': {
           if (!_hour.unavailable && !_hour.id) {
+            console.log(_hour);
             filteredHours.push(_hour);
           }
           break;
@@ -222,6 +225,7 @@ const SessionPicker: React.FC<SessionPickerProps> = ({
         }
         contentContainerStyle={styles.hoursContainer}>
         {Object.keys(filteredHours).map(date => {
+          // console.log(filteredHours[date]);
           return (
             <DayColumn
               filterMode={filterMode}
